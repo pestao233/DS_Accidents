@@ -5,7 +5,6 @@ import seaborn as sns
 import matplotlib.pyplot as plt
 from sklearn.preprocessing import OneHotEncoder
 from scipy.stats import chi2_contingency
-%matplotlib inline
 import plotly.express as px
 import warnings
 warnings.filterwarnings("ignore")
