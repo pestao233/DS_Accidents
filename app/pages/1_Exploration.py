@@ -66,6 +66,6 @@ st.dataframe(caracs.head())
 
 #info()
 buf = io.StringIO()
-df.info(buf=buf)
+caracs.info(buf=buf)
 st.text(buf.getvalue())
 
