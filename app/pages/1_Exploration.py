@@ -9,10 +9,15 @@ Nous avons utilisé les fichiers annuels entre 2005 et 2018, structurés en quat
 - vehicules : type de véhicules impliqués et point d'impact
 - usagers : profil et gravité des personnes impliquées
 Une difficulté notable a été la gestion de l’hétérogénéité entre fichiers annuels : encodages variables (latin1 ou utf-8), séparateurs différents (, ou \t), colonnes présentes ou absentes selon l'année.
+
 Un script de lecture automatique a été mis en place pour charger les 4 tables par année en homogénéisant les formats.
+
 La volumétrie est importante : chaque fichier annuel contient plusieurs dizaines de milliers de lignes, pour un total d’environ 1 million d’accidents sur la période étudiée.
+
 Nous avons aussi contrôlé la cohérence des identifiants Num_Acc entre les tables et aucune différence identifiée.
+
 Nous avons également dans ces fichiers beaucoup de variables qui ne sont pas pertinentes pour notre étude.
+
 Il a donc fallu évaluer leur pertinence afin de décider de les garder ou non.
 """)
     
