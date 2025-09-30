@@ -45,7 +45,7 @@ caracteristiques_2005_2018 = []
 dtypes_caracs = {"dep":"category","com":"category","lum":"int8","agg":"int8","int":"int8","atm":"int8","col":"int8","mois":"int8","jour":"int8","an":"int16"}
 
 for annee in range(2005, 2019):
-    chemin = f'data/caracteristiques_{annee}.csv' ## chemin
+    chemin = f'../../data/caracteristiques_{annee}.csv' ## chemin
 
     sep = '\t' if annee == 2009 else ','
     df = pd.read_csv(chemin, sep=sep, encoding='latin1',  dtype={'dep': str, 'com' : str, 'hrmn' : str})
