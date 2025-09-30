@@ -11,6 +11,8 @@ warnings.filterwarnings("ignore")
 import io
 
 
+st.title("Exploration des données")
+
 st.markdown("<u>__Cadre__</u>", unsafe_allow_html=True)
 st.write("""
 Les données proviennent de la base publique des accidents corporels de la circulation en France, disponibles via data.gouv.fr. 
@@ -34,8 +36,9 @@ Il a donc fallu évaluer leur pertinence afin de décider de les garder ou non.
     
 
 
-st.title("Exploration des données")
-st.write("Chargements des dataframes")
+st.markdown("<u>__Caractéristiques__</u>", unsafe_allow_html=True)
+
+st.write("")
 
 @st.cache_data
 def load_caracteristiques_2005_2018():
