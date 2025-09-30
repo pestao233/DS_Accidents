@@ -1,4 +1,15 @@
 import streamlit as st
+import pandas as pd
+import numpy as np
+import seaborn as sns
+import matplotlib.pyplot as plt
+from sklearn.preprocessing import OneHotEncoder
+from scipy.stats import chi2_contingency
+%matplotlib inline
+import plotly.express as px
+import warnings
+warnings.filterwarnings("ignore")
+
 
 st.markdown("<u>__Cadre__</u>", unsafe_allow_html=True)
 st.write("""
@@ -21,28 +32,26 @@ Nous avons également dans ces fichiers beaucoup de variables qui ne sont pas pe
 Il a donc fallu évaluer leur pertinence afin de décider de les garder ou non.
 """)
     
-import pandas as pd
-import plotly.express as px
+
 
 st.title("Exploration des données")
 st.write("Chargements des dataframes")
 
 @st.cache_data
-def load_csv(file):
-    return pd.read_csv(file)
 
-if uploaded:
-    df = load_csv(uploaded)
-    st.success(f"Shape: {df.shape}")
-    st.dataframe(df.head(50))
-    st.subheader("Types / Valeurs manquantes")
-    st.write(df.dtypes)
-    st.write(df.isna().mean().sort_values(ascending=False).head(20).to_frame("taux_na"))
-    target = st.selectbox("Cible (target)", options=df.columns, index=len(df.columns)-1)
-    st.subheader("Distribution de la cible")
-    if df[target].nunique() < 50:
-        st.plotly_chart(px.histogram(df, x=target), use_container_width=True)
-    else:
-        st.warning("Cible à forte cardinalité, histogramme non affiché.")
-else:
-    st.info("Déposez un CSV pour commencer.")
+
+##On importe les données et on concatène en un seul DF
+caracteristiques_2005_2018 = []
+dtypes_caracs = {"dep":"category","com":"category","lum":"int8","agg":"int8","int":"int8","atm":"int8","col":"int8","mois":"int8","jour":"int8","an":"int16"}
+
+for annee in range(2005, 2019):
+    chemin = f'data/caracteristiques_{annee}.csv' ## chemin
+
+    sep = '\t' if annee == 2009 else ','
+    df = pd.read_csv(chemin, sep=sep, encoding='latin1',  dtype={'dep': str, 'com' : str, 'hrmn' : str})
+
+    df['annee'] = annee
+    caracteristiques_2005_2018.append(df)
+
+caracs = pd.concat(caracteristiques_2005_2018, ignore_index=True)
+st.dataframe(caracs.head())
