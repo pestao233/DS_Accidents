@@ -47,7 +47,7 @@ def load_caracteristiques_2005_2018():
         "mois": "int8", "jour": "int8", "an": "int16"
     }
 
-    for annee in range(2005, 2019):
+    for annee in range(2005, 2009):
         chemin = f'data/caracteristiques_{annee}.csv'  # chemin depuis app/pages/
         sep = '\t' if annee == 2009 else ','
         df = pd.read_csv(
