@@ -8,6 +8,7 @@ from scipy.stats import chi2_contingency
 import plotly.express as px
 import warnings
 warnings.filterwarnings("ignore")
+import io
 
 
 st.markdown("<u>__Cadre__</u>", unsafe_allow_html=True)
@@ -37,23 +38,34 @@ st.title("Exploration des données")
 st.write("Chargements des dataframes")
 
 @st.cache_data
+def load_caracteristiques_2005_2018():
+    caracteristiques_2005_2018 = []
+    dtypes_caracs = {
+        "dep": "category", "com": "category",
+        "lum": "int8", "agg": "int8", "int": "int8",
+        "atm": "int8", "col": "int8",
+        "mois": "int8", "jour": "int8", "an": "int16"
+    }
 
+    for annee in range(2005, 2019):
+        chemin = f'../../data/caracteristiques_{annee}.csv'  # chemin depuis app/pages/
+        sep = '\t' if annee == 2009 else ','
+        df = pd.read_csv(
+            chemin, sep=sep, encoding='latin1',
+            dtype={'dep': str, 'com': str, 'hrmn': str}  # garde tes choix
+        )
+        df['annee'] = annee
+        caracteristiques_2005_2018.append(df)
 
-##On importe les données et on concatène en un seul DF
-caracteristiques_2005_2018 = []
-dtypes_caracs = {"dep":"category","com":"category","lum":"int8","agg":"int8","int":"int8","atm":"int8","col":"int8","mois":"int8","jour":"int8","an":"int16"}
+    caracs = pd.concat(caracteristiques_2005_2018, ignore_index=True)
+    return caracs
 
-for annee in range(2005, 2019):
-    chemin = f'../../data/caracteristiques_{annee}.csv' ## chemin
-
-    sep = '\t' if annee == 2009 else ','
-    df = pd.read_csv(chemin, sep=sep, encoding='latin1',  dtype={'dep': str, 'com' : str, 'hrmn' : str})
-
-    df['annee'] = annee
-    caracteristiques_2005_2018.append(df)
-
-caracs = pd.concat(caracteristiques_2005_2018, ignore_index=True)
+# Appel
+caracs = load_caracteristiques_2005_2018()
 st.dataframe(caracs.head())
 
 #info()
+buf = io.StringIO()
+df.info(buf=buf)
 st.text(buf.getvalue())
+
