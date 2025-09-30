@@ -23,7 +23,8 @@ Utilisez le menu de gauche pour naviguer :
 """)
 
 # Contexte
-st.write("""La sécurité routière constitue un enjeu majeur de santé publique et économique.
+st.write("""<u>__Contexte__</u>
+La sécurité routière constitue un enjeu majeur de santé publique et économique.
 En France, plusieurs dizaines de milliers d’accidents corporels surviennent chaque année, provoquant des blessures, des décès et des coûts importants pour la société.
 L’amélioration de la compréhension des facteurs influençant la gravité des accidents permettrait d’orienter les politiques publiques et  de mieux cibler les actions de sensibilisation et les campagnes de prévention.
 Dans ce cadre, notre projet vise à analyser et à modéliser les données d’accidents routiers afin de prédire la gravité d’un accident à partir de variables explicatives liées au contexte, aux usagers et aux véhicules impliqués.
@@ -31,10 +32,11 @@ La problématique est un problème de classification supervisée : prédire une 
 """)
 
 # Objectifs
-st.write("""L’objectif principal de ce projet est de mettre en place un pipeline complet de Data Science comprenant :
-●	L’exploration et compréhension des données mises à disposition par le ministère de l’intérieur.
-●	L’identification des variables pertinentes et pré-traitement des données.
-●	La préparation d’un jeu de données exploitable pour une phase ultérieure de modélisation.
+st.write("""__Objectifs__:
+L’objectif principal de ce projet est de mettre en place un pipeline complet de Data Science comprenant :
+- L’exploration et compréhension des données mises à disposition par le ministère de l’intérieur.
+- L’identification des variables pertinentes et pré-traitement des données.
+- La préparation d’un jeu de données exploitable pour une phase ultérieure de modélisation.
 Notre démarche est donc progressive :
 1.	partir d’une exploration descriptive des données,
 2.	poursuivre avec un travail de visualisation et de pré-processing,
