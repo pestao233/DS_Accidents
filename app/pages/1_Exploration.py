@@ -55,3 +55,6 @@ for annee in range(2005, 2019):
 
 caracs = pd.concat(caracteristiques_2005_2018, ignore_index=True)
 st.dataframe(caracs.head())
+
+#info()
+st.text(buf.getvalue())
