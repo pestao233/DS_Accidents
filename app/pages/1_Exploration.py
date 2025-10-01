@@ -50,6 +50,7 @@ def load_caracteristiques_2005_2018():
     for annee in range(2005, 2019):                                            #### Filtrer jusqu'en 2009 au lieu de 2019 (pour les tests)
         chemin = f'data/sample_caracteristiques_{annee}.csv'  
         #sep = '\t' if annee == 2009 else ','
+        sep=','
         df = pd.read_csv(
             chemin, sep=sep, encoding='latin1',
             dtype={'dep': str, 'com': str, 'hrmn': str}  
