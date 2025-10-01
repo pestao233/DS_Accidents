@@ -34,7 +34,7 @@ Il a donc fallu évaluer leur pertinence afin de décider de les garder ou non.
 ##                      Caractéristiques                                   ##
 #############################################################################
 
-st.markdown("<u>__Caractéristiques__</u>", unsafe_allow_html=True)
+st.markdown("<u><font size=10>__Caractéristiques__</font></u>", unsafe_allow_html=True)
 st.write("")
 
 @st.cache_data
