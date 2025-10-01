@@ -34,10 +34,8 @@ Nous avons également dans ces fichiers beaucoup de variables qui ne sont pas pe
 Il a donc fallu évaluer leur pertinence afin de décider de les garder ou non.
 """)
     
-
-
+# Caractéristiques
 st.markdown("<u>__Caractéristiques__</u>", unsafe_allow_html=True)
-
 st.write("")
 
 @st.cache_data
@@ -51,11 +49,11 @@ def load_caracteristiques_2005_2018():
     }
 
     for annee in range(2005, 2009):
-        chemin = f'data/sample_caracteristiques_{annee}.csv'  # chemin depuis app/pages/
+        chemin = f'data/sample_caracteristiques_{annee}.csv'  
         sep = '\t' if annee == 2009 else ','
         df = pd.read_csv(
             chemin, sep=sep, encoding='latin1',
-            dtype={'dep': str, 'com': str, 'hrmn': str}  # garde tes choix
+            dtype={'dep': str, 'com': str, 'hrmn': str}  
         )
         df['annee'] = annee
         caracteristiques_2005_2018.append(df)
@@ -67,8 +65,30 @@ def load_caracteristiques_2005_2018():
 caracs = load_caracteristiques_2005_2018()
 st.dataframe(caracs.head())
 
-#info()
+# info()
 buf = io.StringIO()
 caracs.info(buf=buf)
 st.text(buf.getvalue())
 
+########
+# Usagers
+st.markdown("<u>__Usagers__</u>", unsafe_allow_html=True)
+st.write("")
+
+@st.cache_data
+
+
+def load_usagers_2005_2018():
+    usagers_2005_2018 = []
+    for annee in range(2005, 2009):
+        chemin = f'data/usagers_{annee}.csv'
+        df = pd.read_csv(chemin, sep=',', encoding='latin1')
+        df['annee'] = annee
+        usagers_2005_2018.append(df)
+
+    usagers = pd.concat(usagers_2005_2018, ignore_index=True)
+    return usagers
+
+# Appel
+usagers = load_usagers_2005_2018()
+st.dataframe(usagers.head())
