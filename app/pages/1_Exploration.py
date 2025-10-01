@@ -13,7 +13,7 @@ import io
 
 st.title("Exploration des données")
 
-st.markdown("<u>__Cadre__</u>", unsafe_allow_html=True)
+st.markdown("<u><font size=5>__Cadre__</u>", unsafe_allow_html=True)
 st.write("""
 Les données proviennent de la base publique des accidents corporels de la circulation en France, disponibles via data.gouv.fr. 
 Nous avons utilisé les fichiers annuels entre 2005 et 2018, structurés en quatre tables :
@@ -34,7 +34,7 @@ Il a donc fallu évaluer leur pertinence afin de décider de les garder ou non.
 ##                      Caractéristiques                                   ##
 #############################################################################
 
-st.markdown("<u><font size=8>__Caractéristiques__</font></u>", unsafe_allow_html=True)
+st.markdown("<u><font size=5>__Caractéristiques__</font></u>", unsafe_allow_html=True)
 st.write("")
 
 @st.cache_data
@@ -72,7 +72,7 @@ st.text(buf.getvalue())
 #############################################################################
 ##                              Usagers                                    ##
 #############################################################################
-st.markdown("<u><font size=8>__Usagers__</font></u>", unsafe_allow_html=True)
+st.markdown("<u><font size=5>__Usagers__</font></u>", unsafe_allow_html=True)
 st.write("")
 
 @st.cache_data
@@ -99,7 +99,7 @@ st.text(buf.getvalue())
 #############################################################################
 ##                              Lieux                                      ##
 #############################################################################
-st.markdown("<u><font size=8>__Lieux__</font></u>", unsafe_allow_html=True)
+st.markdown("<u><font size=5>__Lieux__</font></u>", unsafe_allow_html=True)
 st.write("")
 
 @st.cache_data
@@ -126,7 +126,7 @@ st.text(buf.getvalue())
 #############################################################################
 ##                              Vehicules                                  ##
 #############################################################################
-st.markdown("<u><font size=8>__Vehicules__</font></u>", unsafe_allow_html=True)
+st.markdown("<u><font size=5>__Vehicules__</font></u>", unsafe_allow_html=True)
 st.write("")
 
 @st.cache_data
