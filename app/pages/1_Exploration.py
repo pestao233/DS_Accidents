@@ -213,7 +213,7 @@ plt.ylabel("Nombre d'accidents")
 
 # Ajouter plus de ticks sur l'axe Y
 max_y = accidents_par_mois.max()
-plt.yticks(range(0, max_y + 5000, 5000))
+plt.yticks(range(0, max_y + 500, 500))
 plt.xticks(rotation=45)
 plt.tight_layout()
 st.pyplot(plt.gcf())
