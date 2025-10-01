@@ -33,8 +33,11 @@ Nous avons également dans ces fichiers beaucoup de variables qui ne sont pas pe
 
 Il a donc fallu évaluer leur pertinence afin de décider de les garder ou non.
 """)
-    
-# Caractéristiques
+
+#############################################################################
+##                      Caractéristiques                                   ##
+#############################################################################
+
 st.markdown("<u>__Caractéristiques__</u>", unsafe_allow_html=True)
 st.write("")
 
@@ -70,14 +73,13 @@ buf = io.StringIO()
 caracs.info(buf=buf)
 st.text(buf.getvalue())
 
-########
-# Usagers
+#############################################################################
+##                              Usagers                                    ##
+#############################################################################
 st.markdown("<u>__Usagers__</u>", unsafe_allow_html=True)
 st.write("")
 
 @st.cache_data
-
-
 def load_usagers_2005_2018():
     usagers_2005_2018 = []
     for annee in range(2005, 2009):
@@ -92,3 +94,49 @@ def load_usagers_2005_2018():
 # Appel
 usagers = load_usagers_2005_2018()
 st.dataframe(usagers.head())
+
+#############################################################################
+##                              Lieux                                      ##
+#############################################################################
+st.markdown("<u>__Lieux__</u>", unsafe_allow_html=True)
+st.write("")
+
+@st.cache_data
+def load_lieux_2005_2018():
+    lieux_2005_2018 = []
+    for annee in range(2005, 2009):
+        chemin = f'data/sample_lieux_{annee}.csv'
+        df = pd.read_csv(chemin, sep=',', encoding='latin1')
+        df['annee'] = annee
+        lieux_2005_2018.append(df)
+
+    lieux = pd.concat(lieux_2005_2018, ignore_index=True)
+    return lieux
+
+# Appel
+lieux = load_lieux_2005_2018()
+st.dataframe(lieux.head())
+
+
+
+#############################################################################
+##                              Vehicules                                  ##
+#############################################################################
+st.markdown("<u>__Vehicules__</u>", unsafe_allow_html=True)
+st.write("")
+
+@st.cache_data
+def load_vehicules_2005_2018():
+    usagers_2005_2018 = []
+    for annee in range(2005, 2009):
+        chemin = f'data/sample_vehicules_{annee}.csv'
+        df = pd.read_csv(chemin, sep=',', encoding='latin1')
+        df['annee'] = annee
+        vehicules_2005_2018.append(df)
+
+    vehicules = pd.concat(vehicules_2005_2018, ignore_index=True)
+    return vehicules
+
+# Appel
+vehicules = load_vehicules_2005_2018()
+st.dataframe(vehicules.head())
