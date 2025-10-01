@@ -174,7 +174,7 @@ annees = list(range(2005, 2019))                                            ####
 accidents_par_annee = accidents_par_annee.reindex(annees, fill_value=0)
 
 # Tracer la courbe
-plt.figure(figsize=(7, 4))
+plt.figure(figsize=(6, 4))
 sns.lineplot(x=accidents_par_annee.index, y=accidents_par_annee.values, marker='o')
 plt.title("Évolution du nombre d'accidents par année")
 plt.xlabel("Année")
@@ -208,7 +208,7 @@ noms_mois = ['janvier', 'février', 'mars', 'avril', 'mai', 'juin',
 accidents_par_mois = caracs['mois'].value_counts().sort_index()
 
 # Tracé avec palette et suppression du warning via hue
-fig, ax = plt.subplots(figsize=(8, 4))
+fig, ax = plt.subplots(figsize=(6, 4))
 sns.barplot(x=noms_mois, y=accidents_par_mois.values, hue=noms_mois, palette="Greens_d", legend=False)
 
 plt.title("Nombre d'accidents par mois")
