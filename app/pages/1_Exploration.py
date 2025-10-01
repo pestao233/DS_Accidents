@@ -194,3 +194,26 @@ fig = px.line(
 )
 st.plotly_chart(fig, use_container_width=True)
 
+####
+##Nombre d'accidents par mois
+
+# Noms des mois en français
+noms_mois = ['janvier', 'février', 'mars', 'avril', 'mai', 'juin',
+             'juillet', 'août', 'septembre', 'octobre', 'novembre', 'décembre']
+
+# Compter les accidents par mois
+accidents_par_mois = caracs['mois'].value_counts().sort_index()
+
+# Tracé avec palette et suppression du warning via hue
+sns.barplot(x=noms_mois, y=accidents_par_mois.values, hue=noms_mois, palette="Greens_d", legend=False)
+
+plt.title("Nombre d'accidents par mois")
+plt.xlabel("Mois")
+plt.ylabel("Nombre d'accidents")
+
+# Ajouter plus de ticks sur l'axe Y
+max_y = accidents_par_mois.max()
+plt.yticks(range(0, max_y + 5000, 5000))
+plt.xticks(rotation=45)
+plt.tight_layout()
+st.pyplot(plt.gcf())
