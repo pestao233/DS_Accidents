@@ -91,6 +91,11 @@ def load_usagers_2005_2018():
 usagers = load_usagers_2005_2018()
 st.dataframe(usagers.head())
 
+# info()
+buf = io.StringIO()
+usagers.info(buf=buf)
+st.text(buf.getvalue())
+
 #############################################################################
 ##                              Lieux                                      ##
 #############################################################################
@@ -113,7 +118,10 @@ def load_lieux_2005_2018():
 lieux = load_lieux_2005_2018()
 st.dataframe(lieux.head())
 
-
+# info()
+buf = io.StringIO()
+lieux.info(buf=buf)
+st.text(buf.getvalue())
 
 #############################################################################
 ##                              Vehicules                                  ##
@@ -136,3 +144,8 @@ def load_vehicules_2005_2018():
 # Appel
 vehicules = load_vehicules_2005_2018()
 st.dataframe(vehicules.head())
+
+# info()
+buf = io.StringIO()
+vehicules.info(buf=buf)
+st.text(buf.getvalue())
