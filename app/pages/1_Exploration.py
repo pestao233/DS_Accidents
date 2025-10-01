@@ -47,7 +47,7 @@ def load_caracteristiques_2005_2018():
         "mois": "int8", "jour": "int8", "an": "int16"
     }
 
-    for annee in range(2005, 2009):
+    for annee in range(2005, 2019):                                            #### Filtrer jusqu'en 2009 au lieu de 2019 (pour les tests)
         chemin = f'data/sample_caracteristiques_{annee}.csv'  
         sep = '\t' if annee == 2009 else ','
         df = pd.read_csv(
@@ -79,7 +79,7 @@ st.write("")
 @st.cache_data
 def load_usagers_2005_2018():
     usagers_2005_2018 = []
-    for annee in range(2005, 2009):
+    for annee in range(2005, 2019):                                            #### Filtrer jusqu'en 2009 au lieu de 2019 (pour les tests)
         chemin = f'data/sample_usagers_{annee}.csv'
         df = pd.read_csv(chemin, sep=',', encoding='latin1')
         df['annee'] = annee
@@ -107,7 +107,7 @@ st.write("")
 @st.cache_data
 def load_lieux_2005_2018():
     lieux_2005_2018 = []
-    for annee in range(2005, 2009):
+    for annee in range(2005, 2019):                                            #### Filtrer jusqu'en 2009 au lieu de 2019 (pour les tests)
         chemin = f'data/sample_lieux_{annee}.csv'
         df = pd.read_csv(chemin, sep=',', encoding='latin1')
         df['annee'] = annee
@@ -135,7 +135,7 @@ st.write("")
 @st.cache_data
 def load_vehicules_2005_2018():
     vehicules_2005_2018 = []
-    for annee in range(2005, 2009):
+    for annee in range(2005, 2019):                                            #### Filtrer jusqu'en 2009 au lieu de 2019 (pour les tests)
         chemin = f'data/sample_vehicules_{annee}.csv'
         df = pd.read_csv(chemin, sep=',', encoding='latin1')
         df['annee'] = annee
@@ -158,14 +158,17 @@ st.code(s, language="text")
 #############################################################################
 ##                                DataViz                                  ##
 #############################################################################
-## Nombre d'accident par années
+
+#####
+## Nombre d'accident par années (=>sample => 1000 lignes = 1000 accidents)
+#####
 
 # Compter les accidents par année
 caracs.reset_index(drop=True, inplace=True)
 accidents_par_annee = caracs['annee'].value_counts().sort_index()
 
 # Liste complète des années (même si certaines années ont 0 accidents)
-annees = list(range(2005, 2009))
+annees = list(range(2005, 2019))                                            #### Filtrer jusqu'en 2009 au lieu de 2019 (pour les tests)
 
 # S'assurer que toutes les années sont présentes, même avec 0
 accidents_par_annee = accidents_par_annee.reindex(annees, fill_value=0)
@@ -183,7 +186,7 @@ st.pyplot(plt.gcf())
 # option 2
 import plotly.express as px
 accidents_par_annee = caracs['annee'].value_counts().sort_index()
-annees = list(range(2005, 2009))
+annees = list(range(2005, 2019))                                            #### Filtrer jusqu'en 2009 au lieu de 2019 (pour les tests)
 accidents_par_annee = accidents_par_annee.reindex(annees, fill_value=0)
 fig = px.line(
     x=accidents_par_annee.index,
@@ -194,9 +197,9 @@ fig = px.line(
 )
 st.plotly_chart(fig, use_container_width=True)
 
-####
-##Nombre d'accidents par mois
-
+######
+##  Nombre d'accidents par mois
+######
 # Noms des mois en français
 noms_mois = ['janvier', 'février', 'mars', 'avril', 'mai', 'juin',
              'juillet', 'août', 'septembre', 'octobre', 'novembre', 'décembre']
@@ -213,7 +216,7 @@ plt.ylabel("Nombre d'accidents")
 
 # Ajouter plus de ticks sur l'axe Y
 max_y = accidents_par_mois.max()
-plt.yticks(range(0, max_y + 500, 500))
+plt.yticks(range(0, max_y + 500, 500))                                            #### Filtrer jusqu'en 2009 au lieu de 2019 (pour les tests)
 plt.xticks(rotation=45)
 plt.tight_layout()
 st.pyplot(plt.gcf())
