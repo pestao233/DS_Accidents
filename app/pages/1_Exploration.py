@@ -81,7 +81,7 @@ st.write("")
 def load_usagers_2005_2018():
     usagers_2005_2018 = []
     for annee in range(2005, 2009):
-        chemin = f'data/usagers_{annee}.csv'
+        chemin = f'data/sample_usagers_{annee}.csv'
         df = pd.read_csv(chemin, sep=',', encoding='latin1')
         df['annee'] = annee
         usagers_2005_2018.append(df)
