@@ -153,3 +153,41 @@ buf = io.StringIO()
 vehicules.info(buf=buf)
 s=buf.getvalue()
 st.code(s, language="text")
+
+
+#############################################################################
+##                                DataViz                                  ##
+#############################################################################
+## Nombre d'accident par années
+
+# Compter les accidents par année
+accidents_par_annee = caracs['annee'].value_counts().sort_index()
+
+# Liste complète des années (même si certaines années ont 0 accidents)
+annees = list(range(2005, 2009))
+
+# S'assurer que toutes les années sont présentes, même avec 0
+accidents_par_annee = accidents_par_annee.reindex(annees, fill_value=0)
+
+# Tracer la courbe
+plt.figure(figsize=(7, 4))
+sns.lineplot(x=accidents_par_annee.index, y=accidents_par_annee.values, marker='o')
+plt.title("Évolution du nombre d'accidents par année")
+plt.xlabel("Année")
+plt.ylabel("Nombre d'accidents")
+plt.xticks(annees, rotation=45)
+plt.tight_layout()
+st.pyplot(plt.gcf())
+
+# option 2
+import plotly.express as px
+accidents_par_annee = caracs['annee'].value_counts().sort_index()
+annees = list(range(2005, 2009))
+accidents_par_annee = accidents_par_annee.reindex(annees, fill_value=0)
+fig = px.line(
+    x=accidents_par_annee.index,
+    y=accidents_par_annee.values,
+    markers=True,
+    labels={"x": "Année", "y": "Nombre d'accidents"},
+    title="Évolution du nombre d'accidents par année"
+)
