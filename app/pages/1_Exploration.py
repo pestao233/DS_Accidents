@@ -161,6 +161,7 @@ st.code(s, language="text")
 ## Nombre d'accident par années
 
 # Compter les accidents par année
+caracs.reset_index(drop=True, inplace=True)
 accidents_par_annee = caracs['annee'].value_counts().sort_index()
 
 # Liste complète des années (même si certaines années ont 0 accidents)
