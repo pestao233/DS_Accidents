@@ -34,7 +34,7 @@ Il a donc fallu évaluer leur pertinence afin de décider de les garder ou non.
 ##                      Caractéristiques                                   ##
 #############################################################################
 
-st.markdown("<u><font size=10>__Caractéristiques__</font></u>", unsafe_allow_html=True)
+st.markdown("<u><font size=8>__Caractéristiques__</font></u>", unsafe_allow_html=True)
 st.write("")
 
 @st.cache_data
@@ -72,7 +72,7 @@ st.text(buf.getvalue())
 #############################################################################
 ##                              Usagers                                    ##
 #############################################################################
-st.markdown("<u>__Usagers__</u>", unsafe_allow_html=True)
+st.markdown("<u><font size=8>__Usagers__</font></u>", unsafe_allow_html=True)
 st.write("")
 
 @st.cache_data
@@ -99,7 +99,7 @@ st.text(buf.getvalue())
 #############################################################################
 ##                              Lieux                                      ##
 #############################################################################
-st.markdown("<u>__Lieux__</u>", unsafe_allow_html=True)
+st.markdown("<u><font size=8>__Lieux__</font></u>", unsafe_allow_html=True)
 st.write("")
 
 @st.cache_data
@@ -126,7 +126,7 @@ st.text(buf.getvalue())
 #############################################################################
 ##                              Vehicules                                  ##
 #############################################################################
-st.markdown("<u>__Vehicules__</u>", unsafe_allow_html=True)
+st.markdown("<u><font size=8>__Vehicules__</font></u>", unsafe_allow_html=True)
 st.write("")
 
 @st.cache_data
