@@ -95,7 +95,8 @@ st.dataframe(usagers.head())
 # info()
 buf = io.StringIO()
 usagers.info(buf=buf)
-st.text(buf.getvalue())
+s=buf.getvalue()
+st.code(s, language="text")
 
 #############################################################################
 ##                              Lieux                                      ##
@@ -122,7 +123,8 @@ st.dataframe(lieux.head())
 # info()
 buf = io.StringIO()
 lieux.info(buf=buf)
-st.text(buf.getvalue())
+s=buf.getvalue()
+st.code(s, language="text")
 
 #############################################################################
 ##                              Vehicules                                  ##
@@ -149,4 +151,5 @@ st.dataframe(vehicules.head())
 # info()
 buf = io.StringIO()
 vehicules.info(buf=buf)
-st.text(buf.getvalue())
+s=buf.getvalue()
+st.code(s, language="text")
