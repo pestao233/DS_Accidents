@@ -191,3 +191,5 @@ fig = px.line(
     labels={"x": "Année", "y": "Nombre d'accidents"},
     title="Évolution du nombre d'accidents par année"
 )
+st.plotly_chart(fig, use_container_width=True)
+
