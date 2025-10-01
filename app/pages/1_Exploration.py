@@ -67,7 +67,7 @@ st.dataframe(caracs.head())
 # info()
 buf = io.StringIO()
 caracs.info(buf=buf)
-st.text(buf.getvalue())
+s=buf.getvalue()
 st.code(s, language="text")
 
 #############################################################################
