@@ -200,6 +200,10 @@ tab1, tab2, tab3 = st.tabs(["📥 Chargement", "🔍 Exploration", "🧼 Nettoya
 with tab1:
     st.markdown("#### Aperçu (Caractéristiques)")
     st.dataframe(caracs.head())
+    c1, c2, c3 = st.columns(3)
+    c1.metric("Lignes totales:", f"{caracs.shape[0]:,}".replace(",", " "))
+    c2.metric("Colonnes totales:", caracs.shape[1])
+    c3.metric("Mémoire (Mo)", round(caracs.memory_usage(deep=True).sum()/1024**2, 2))
 
     st.markdown("#### Aperçu (Usagers)")
     st.dataframe(usagers.head())
@@ -209,7 +213,8 @@ with tab1:
 
     st.markdown("#### Aperçu (Véhicules)")
     st.dataframe(vehicules.head())
-            
+  
+
 with tab2:
     # info()
     buf = io.StringIO()
