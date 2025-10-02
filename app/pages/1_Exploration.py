@@ -32,6 +32,42 @@ hr { margin: .8rem 0 1.2rem 0; opacity: .4; }
 </style>
 """, unsafe_allow_html=True)
 
+#########
+
+# Petits badges
+st.markdown('<span class="badge">Dataset 2005–2018</span> '
+            '<span class="badge">Classification</span> '
+            '<span class="badge">Streamlit Demo</span>', unsafe_allow_html=True)
+
+st.divider()
+
+# KPIs (ex: après avoir chargé caracs)
+c1, c2, c3 = st.columns(3)
+c1.metric("Lignes", f"{caracs.shape[0]:,}".replace(",", " "))
+c2.metric("Colonnes", caracs.shape[1])
+c3.metric("Mémoire (Mo)", round(caracs.memory_usage(deep=True).sum()/1024**2, 2))
+
+st.divider()
+
+# Onglets pour organiser ton code existant (colle tes blocs EDA dans les bons onglets)
+tab1, tab2, tab3 = st.tabs(["📥 Chargement", "🔍 Exploration", "🧼 Nettoyage"])
+with tab1:
+    st.markdown("#### Chargement des fichiers")
+    # ⬇️ colle ici ton bloc de lecture / concat
+    # st.dataframe(caracs.head())
+
+with tab2:
+    st.markdown("#### Aperçus & distributions")
+    # ⬇️ colle ici tes .head(), .info() (version st.code), histos, countplot, etc.
+
+with tab3:
+    st.markdown("#### Nettoyages appliqués")
+    # ⬇️ colle ici tes transformations (rename, types, fillna...), puis un aperçu
+
+
+
+
+########################################
 st.title("Exploration des données")
 
 st.markdown("<u><font size=5>__Cadre__</u>", unsafe_allow_html=True)
