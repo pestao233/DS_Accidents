@@ -1,3 +1,15 @@
+import streamlit as st
+import pandas as pd
+import numpy as np
+import seaborn as sns
+import matplotlib.pyplot as plt
+from sklearn.preprocessing import OneHotEncoder
+from scipy.stats import chi2_contingency
+import plotly.express as px
+import warnings
+warnings.filterwarnings("ignore")
+import io
+
 # 1) largeur de page : "centered" ou "wide"
 st.set_page_config(layout="centered", page_title="Accidents routiers", page_icon="🚧")
 
@@ -19,19 +31,6 @@ hr { margin: .8rem 0 1.2rem 0; opacity: .4; }
 .card { border:1px solid rgba(255,255,255,.1); border-radius: 12px; padding: .9rem 1rem; margin:.4rem 0; }
 </style>
 """, unsafe_allow_html=True)
-
-import streamlit as st
-import pandas as pd
-import numpy as np
-import seaborn as sns
-import matplotlib.pyplot as plt
-from sklearn.preprocessing import OneHotEncoder
-from scipy.stats import chi2_contingency
-import plotly.express as px
-import warnings
-warnings.filterwarnings("ignore")
-import io
-
 
 st.title("Exploration des données")
 
