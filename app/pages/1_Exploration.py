@@ -103,7 +103,7 @@ def load_caracteristiques_2005_2018():
 c1, c2, c3 = st.columns(3)
 c1.metric("Lignes", f"{caracs.shape[0]:,}".replace(",", " "))
 c2.metric("Colonnes", caracs.shape[1])
-c3.metric("Mémoire (Mo)", round(caracs.memory_usage(deep=True).sum()/1024**2, 2))
+#c3.metric("Mémoire (Mo)", round(caracs.memory_usage(deep=True).sum()/1024**2, 2))
 
 st.divider()
 
