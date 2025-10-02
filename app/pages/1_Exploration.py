@@ -116,7 +116,7 @@ def load_usagers_2005_2018():
     usagers = pd.concat(usagers_2005_2018, ignore_index=True)
     return usagers
 
-# Appel
+'''# Appel
 usagers = load_usagers_2005_2018()
 st.dataframe(usagers.head())
 
@@ -125,6 +125,7 @@ buf = io.StringIO()
 usagers.info(buf=buf)
 s=buf.getvalue()
 st.code(s, language="text")
+'''
 
 #############################################################################
 ##                              Lieux                                      ##
@@ -203,19 +204,34 @@ with tab1:
     st.markdown("#### Aperçu (Usagers)")
     st.dataframe(usagers.head())
 
+    st.markdown("#### Aperçu (Lieux)")
+    st.dataframe(lieux.head())
+
+    st.markdown("#### Aperçu (Véhicules)")
+    st.dataframe(vehicules.head())
+            
 with tab2:
-    st.markdown("#### Info (Caractéristiques)")
     # info()
     buf = io.StringIO()
+    st.markdown("#### Info (Caractéristiques)")
     caracs.info(buf=buf)
     s=buf.getvalue()
     st.code(s, language="text")
 
     st.markdown("#### Info (Usagers)")
-
+    usagers.info(buf=buf)
+    s=buf.getvalue()
+    st.code(s, language="text")
+    
     st.markdown("#### Info (Lieux)")
-
+    lieux.info(buf=buf)
+    s=buf.getvalue()
+    st.code(s, language="text")
+            
     st.markdown("#### Info (Véhicules)")
+    vehicules.info(buf=buf)
+    s=buf.getvalue()
+    st.code(s, language="text")          
             
 with tab3:
     st.markdown("#### Nettoyages appliqués")
