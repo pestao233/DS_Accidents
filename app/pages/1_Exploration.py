@@ -98,43 +98,6 @@ def load_caracteristiques_2005_2018():
 caracs = load_caracteristiques_2005_2018()
 
 
-####
-
-# KPIs (ex: après avoir chargé caracs)
-c1, c2, c3 = st.columns(3)
-c1.metric("Lignes", f"{caracs.shape[0]:,}".replace(",", " "))
-c2.metric("Colonnes", caracs.shape[1])
-#c3.metric("Mémoire (Mo)", round(caracs.memory_usage(deep=True).sum()/1024**2, 2))
-
-st.divider()
-
-# Onglets pour organiser ton code existant (colle tes blocs EDA dans les bons onglets)
-tab1, tab2, tab3 = st.tabs(["📥 Chargement", "🔍 Exploration", "🧼 Nettoyage"])
-with tab1:
-    st.markdown("#### Chargement des fichiers")
-    # ⬇️ colle ici ton bloc de lecture / concat
-    st.dataframe(caracs.head())
-
-with tab2:
-    st.markdown("#### Aperçus & distributions")
-    # ⬇️ colle ici tes .head(), .info() (version st.code), histos, countplot, etc.
-    # info()
-    buf = io.StringIO()
-    caracs.info(buf=buf)
-    s=buf.getvalue()
-    st.code(s, language="text")
-
-with tab3:
-    st.markdown("#### Nettoyages appliqués")
-    # ⬇️ colle ici tes transformations (rename, types, fillna...), puis un aperçu
-
-
-
-
-
-
-
-
 #############################################################################
 ##                              Usagers                                    ##
 #############################################################################
@@ -219,6 +182,44 @@ vehicules.info(buf=buf)
 s=buf.getvalue()
 st.code(s, language="text")
 
+
+#############################################################################
+##                                Head/info                                ##
+#############################################################################
+
+c1, c2, c3 = st.columns(3)
+c1.metric("Lignes", f"{caracs.shape[0]:,}".replace(",", " "))
+c2.metric("Colonnes", caracs.shape[1])
+#c3.metric("Mémoire (Mo)", round(caracs.memory_usage(deep=True).sum()/1024**2, 2))
+
+st.divider()
+
+# Onglets pour organiser ton code existant (colle tes blocs EDA dans les bons onglets)
+tab1, tab2, tab3 = st.tabs(["📥 Chargement", "🔍 Exploration", "🧼 Nettoyage"])
+with tab1:
+    st.markdown("#### Aperçu (Caractéristiques)")
+    st.dataframe(caracs.head())
+
+    st.markdown("#### Aperçu (Usagers)")
+    st.dataframe(usagers.head())
+
+with tab2:
+    st.markdown("#### Info (Caractéristiques)")
+    # info()
+    buf = io.StringIO()
+    caracs.info(buf=buf)
+    s=buf.getvalue()
+    st.code(s, language="text")
+
+    st.markdown("#### Info (Usagers)")
+
+    st.markdown("#### Info (Lieux)")
+
+    st.markdown("#### Info (Véhicules)")
+            
+with tab3:
+    st.markdown("#### Nettoyages appliqués")
+    # ⬇️ colle ici tes transformations (rename, types, fillna...), puis un aperçu
 
 #############################################################################
 ##                                DataViz                                  ##
