@@ -116,16 +116,16 @@ def load_usagers_2005_2018():
     usagers = pd.concat(usagers_2005_2018, ignore_index=True)
     return usagers
 
-'''# Appel
+# Appel
 usagers = load_usagers_2005_2018()
-st.dataframe(usagers.head())
+#st.dataframe(usagers.head())
 
 # info()
 buf = io.StringIO()
 usagers.info(buf=buf)
 s=buf.getvalue()
 st.code(s, language="text")
-'''
+
 
 #############################################################################
 ##                              Lieux                                      ##
@@ -147,7 +147,7 @@ def load_lieux_2005_2018():
 
 # Appel
 lieux = load_lieux_2005_2018()
-st.dataframe(lieux.head())
+#st.dataframe(lieux.head())
 
 # info()
 buf = io.StringIO()
@@ -175,7 +175,7 @@ def load_vehicules_2005_2018():
 
 # Appel
 vehicules = load_vehicules_2005_2018()
-st.dataframe(vehicules.head())
+#st.dataframe(vehicules.head())
 
 # info()
 buf = io.StringIO()
