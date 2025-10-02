@@ -1,3 +1,25 @@
+# 1) largeur de page : "centered" ou "wide"
+st.set_page_config(layout="centered", page_title="Accidents routiers", page_icon="🚧")
+
+# 2) CSS simple : largeur max + tailles + espacement
+st.markdown("""
+<style>
+/* largeur max du contenu */
+.main .block-container {max-width: 1100px; padding-top: 1.5rem; padding-bottom: 4rem;}
+/* titres */
+h1, h2, h3 { letter-spacing: .2px; }
+h1 { font-size: 1.9rem !important; }
+h2 { font-size: 1.4rem !important; margin-top: 1.2rem; }
+/* paragraphes */
+p, li { line-height: 1.6; font-size: 0.98rem; }
+/* séparateurs plus discrets */
+hr { margin: .8rem 0 1.2rem 0; opacity: .4; }
+/* badges */
+.badge { display:inline-block; padding: .15rem .5rem; border-radius: .5rem; background:#111827; color:#E5E7EB; font-size:.75rem; }
+.card { border:1px solid rgba(255,255,255,.1); border-radius: 12px; padding: .9rem 1rem; margin:.4rem 0; }
+</style>
+""", unsafe_allow_html=True)
+
 import streamlit as st
 import pandas as pd
 import numpy as np
