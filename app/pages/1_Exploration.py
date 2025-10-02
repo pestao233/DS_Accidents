@@ -124,7 +124,7 @@ usagers = load_usagers_2005_2018()
 buf = io.StringIO()
 usagers.info(buf=buf)
 s=buf.getvalue()
-st.code(s, language="text")
+#st.code(s, language="text")
 
 
 #############################################################################
@@ -153,7 +153,7 @@ lieux = load_lieux_2005_2018()
 buf = io.StringIO()
 lieux.info(buf=buf)
 s=buf.getvalue()
-st.code(s, language="text")
+#st.code(s, language="text")
 
 #############################################################################
 ##                              Vehicules                                  ##
@@ -181,17 +181,12 @@ vehicules = load_vehicules_2005_2018()
 buf = io.StringIO()
 vehicules.info(buf=buf)
 s=buf.getvalue()
-st.code(s, language="text")
+#st.code(s, language="text")
 
 
 #############################################################################
 ##                                Head/info                                ##
 #############################################################################
-
-c1, c2, c3 = st.columns(3)
-c1.metric("Lignes", f"{caracs.shape[0]:,}".replace(",", " "))
-c2.metric("Colonnes", caracs.shape[1])
-#c3.metric("Mémoire (Mo)", round(caracs.memory_usage(deep=True).sum()/1024**2, 2))
 
 st.divider()
 
@@ -220,13 +215,13 @@ with tab2:
     buf = io.StringIO()
     st.markdown("#### Info (Caractéristiques)")
     caracs.info(buf=buf)
-    s=buf.getvalue()
-    st.code(s, language="text")
+    s1=buf.getvalue()
+    st.code(s1, language="text")
 
     st.markdown("#### Info (Usagers)")
     usagers.info(buf=buf)
-    s=buf.getvalue()
-    st.code(s, language="text")
+    s2=buf.getvalue()
+    st.code(s2, language="text")
     
     st.markdown("#### Info (Lieux)")
     lieux.info(buf=buf)
