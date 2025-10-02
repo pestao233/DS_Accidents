@@ -67,7 +67,7 @@ Il a donc fallu évaluer leur pertinence afin de décider de les garder ou non.
 ##                      Caractéristiques                                   ##
 #############################################################################
 
-st.markdown("<u><font size=5>__Caractéristiques__</font></u>", unsafe_allow_html=True)
+#st.markdown("<u><font size=5>__Caractéristiques__</font></u>", unsafe_allow_html=True)
 st.write("")
 
 @st.cache_data
@@ -101,7 +101,7 @@ caracs = load_caracteristiques_2005_2018()
 #############################################################################
 ##                              Usagers                                    ##
 #############################################################################
-st.markdown("<u><font size=5>__Usagers__</font></u>", unsafe_allow_html=True)
+#st.markdown("<u><font size=5>__Usagers__</font></u>", unsafe_allow_html=True)
 st.write("")
 
 @st.cache_data
@@ -130,7 +130,7 @@ s=buf.getvalue()
 #############################################################################
 ##                              Lieux                                      ##
 #############################################################################
-st.markdown("<u><font size=5>__Lieux__</font></u>", unsafe_allow_html=True)
+#st.markdown("<u><font size=5>__Lieux__</font></u>", unsafe_allow_html=True)
 st.write("")
 
 @st.cache_data
@@ -158,7 +158,7 @@ s=buf.getvalue()
 #############################################################################
 ##                              Vehicules                                  ##
 #############################################################################
-st.markdown("<u><font size=5>__Vehicules__</font></u>", unsafe_allow_html=True)
+#st.markdown("<u><font size=5>__Vehicules__</font></u>", unsafe_allow_html=True)
 st.write("")
 
 @st.cache_data
@@ -218,16 +218,19 @@ with tab2:
     s1=buf.getvalue()
     st.code(s1, language="text")
 
+    buf = io.StringIO()
     st.markdown("#### Info (Usagers)")
     usagers.info(buf=buf)
     s2=buf.getvalue()
     st.code(s2, language="text")
     
+    buf = io.StringIO()
     st.markdown("#### Info (Lieux)")
     lieux.info(buf=buf)
     s=buf.getvalue()
     st.code(s, language="text")
             
+    buf = io.StringIO()
     st.markdown("#### Info (Véhicules)")
     vehicules.info(buf=buf)
     s=buf.getvalue()
