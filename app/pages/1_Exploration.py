@@ -85,7 +85,7 @@ def load_caracteristiques_2005_2018():
         #sep = '\t' if annee == 2009 else ','
         sep=','
         df = pd.read_csv(
-            chemin, sep=sep, encoding='latin1',
+            chemin, sep=',', encoding='latin1',
             dtype={'dep': str, 'com': str, 'hrmn': str}  
         )
         df['annee'] = annee
