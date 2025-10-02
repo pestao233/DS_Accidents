@@ -230,69 +230,69 @@ with tab3:
 
 with tab4:
     st.markdown("#### Dataviz")
-            #############################################################################
-            ##                                DataViz                                  ##
-            #############################################################################
+    #############################################################################
+    ##                                DataViz                                  ##
+    #############################################################################
             
-            #####
-            ## Nombre d'accident par années (=>sample => 1000 lignes = 1000 accidents)
-            #####
+    #####
+    ## Nombre d'accident par années (=>sample => 1000 lignes = 1000 accidents)
+    #####
             
-            # Compter les accidents par année
-            caracs.reset_index(drop=True, inplace=True)
-            accidents_par_annee = caracs['annee'].value_counts().sort_index()
+    # Compter les accidents par année
+    caracs.reset_index(drop=True, inplace=True)
+    accidents_par_annee = caracs['annee'].value_counts().sort_index()
             
-            # Liste complète des années (même si certaines années ont 0 accidents)
-            annees = list(range(2005, 2019))                                            #### Filtrer jusqu'en 2009 au lieu de 2019 (pour les tests)
+    # Liste complète des années (même si certaines années ont 0 accidents)
+    annees = list(range(2005, 2019))                                            #### Filtrer jusqu'en 2009 au lieu de 2019 (pour les tests)
             
-            # S'assurer que toutes les années sont présentes, même avec 0
-            accidents_par_annee = accidents_par_annee.reindex(annees, fill_value=0)
+    # S'assurer que toutes les années sont présentes, même avec 0
+    accidents_par_annee = accidents_par_annee.reindex(annees, fill_value=0)
             
-            # Tracer la courbe
-            plt.figure(figsize=(6, 4))
-            sns.lineplot(x=accidents_par_annee.index, y=accidents_par_annee.values, marker='o')
-            plt.title("Évolution du nombre d'accidents par année")
-            plt.xlabel("Année")
-            plt.ylabel("Nombre d'accidents")
-            plt.xticks(annees, rotation=45)
-            plt.tight_layout()
-            st.pyplot(plt.gcf())
+    # Tracer la courbe
+    plt.figure(figsize=(6, 4))
+    sns.lineplot(x=accidents_par_annee.index, y=accidents_par_annee.values, marker='o')
+    plt.title("Évolution du nombre d'accidents par année")
+    plt.xlabel("Année")
+    plt.ylabel("Nombre d'accidents")
+    plt.xticks(annees, rotation=45)
+    plt.tight_layout()
+    st.pyplot(plt.gcf())
             
-            # option 2
-            import plotly.express as px
-            accidents_par_annee = caracs['annee'].value_counts().sort_index()
-            annees = list(range(2005, 2019))                                            #### Filtrer jusqu'en 2009 au lieu de 2019 (pour les tests)
-            accidents_par_annee = accidents_par_annee.reindex(annees, fill_value=0)
-            fig = px.line(
+    # option 2
+    import plotly.express as px
+    accidents_par_annee = caracs['annee'].value_counts().sort_index()
+    annees = list(range(2005, 2019))                                            #### Filtrer jusqu'en 2009 au lieu de 2019 (pour les tests)
+    accidents_par_annee = accidents_par_annee.reindex(annees, fill_value=0)
+    fig = px.line(
                 x=accidents_par_annee.index,
                 y=accidents_par_annee.values,
                 markers=True,
                 labels={"x": "Année", "y": "Nombre d'accidents"},
                 title="Évolution du nombre d'accidents par année"
             )
-            st.plotly_chart(fig, use_container_width=True)
+    st.plotly_chart(fig, use_container_width=True)
             
-            ######
-            ##  Nombre d'accidents par mois
-            ######
-            # Noms des mois en français
-            noms_mois = ['janvier', 'février', 'mars', 'avril', 'mai', 'juin',
+    ######
+    ##  Nombre d'accidents par mois
+    ######
+    # Noms des mois en français
+    noms_mois = ['janvier', 'février', 'mars', 'avril', 'mai', 'juin',
                          'juillet', 'août', 'septembre', 'octobre', 'novembre', 'décembre']
             
-            # Compter les accidents par mois
-            accidents_par_mois = caracs['mois'].value_counts().sort_index()
+    # Compter les accidents par mois
+    accidents_par_mois = caracs['mois'].value_counts().sort_index()
             
-            # Tracé avec palette et suppression du warning via hue
-            fig, ax = plt.subplots(figsize=(6, 4))
-            sns.barplot(x=noms_mois, y=accidents_par_mois.values, hue=noms_mois, palette="Greens_d", legend=False)
+    # Tracé avec palette et suppression du warning via hue
+    fig, ax = plt.subplots(figsize=(6, 4))
+    sns.barplot(x=noms_mois, y=accidents_par_mois.values, hue=noms_mois, palette="Greens_d", legend=False)
             
-            plt.title("Nombre d'accidents par mois")
-            plt.xlabel("Mois")
-            plt.ylabel("Nombre d'accidents")
+    plt.title("Nombre d'accidents par mois")
+    plt.xlabel("Mois")
+    plt.ylabel("Nombre d'accidents")
             
-            # Ajouter plus de ticks sur l'axe Y
-            max_y = accidents_par_mois.max()
-            plt.yticks(range(0, max_y + 500, 500))                                            #### Filtrer jusqu'en 2009 au lieu de 2019 (pour les tests)
-            plt.xticks(rotation=45)
-            plt.tight_layout()
-            st.pyplot(plt.gcf())
+    # Ajouter plus de ticks sur l'axe Y
+    max_y = accidents_par_mois.max()
+    plt.yticks(range(0, max_y + 500, 500))                                            #### Filtrer jusqu'en 2009 au lieu de 2019 (pour les tests)
+    plt.xticks(rotation=45)
+    plt.tight_layout()
+    st.pyplot(plt.gcf())
