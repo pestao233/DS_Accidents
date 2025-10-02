@@ -68,7 +68,6 @@ Il a donc fallu évaluer leur pertinence afin de décider de les garder ou non.
 #############################################################################
 
 #st.markdown("<u><font size=5>__Caractéristiques__</font></u>", unsafe_allow_html=True)
-st.write("")
 
 @st.cache_data
 def load_caracteristiques_2005_2018():
@@ -102,7 +101,6 @@ caracs = load_caracteristiques_2005_2018()
 ##                              Usagers                                    ##
 #############################################################################
 #st.markdown("<u><font size=5>__Usagers__</font></u>", unsafe_allow_html=True)
-st.write("")
 
 @st.cache_data
 def load_usagers_2005_2018():
@@ -118,20 +116,13 @@ def load_usagers_2005_2018():
 
 # Appel
 usagers = load_usagers_2005_2018()
-#st.dataframe(usagers.head())
 
-# info()
-buf = io.StringIO()
-usagers.info(buf=buf)
-s=buf.getvalue()
-#st.code(s, language="text")
 
 
 #############################################################################
 ##                              Lieux                                      ##
 #############################################################################
 #st.markdown("<u><font size=5>__Lieux__</font></u>", unsafe_allow_html=True)
-st.write("")
 
 @st.cache_data
 def load_lieux_2005_2018():
@@ -147,19 +138,12 @@ def load_lieux_2005_2018():
 
 # Appel
 lieux = load_lieux_2005_2018()
-#st.dataframe(lieux.head())
 
-# info()
-buf = io.StringIO()
-lieux.info(buf=buf)
-s=buf.getvalue()
-#st.code(s, language="text")
 
 #############################################################################
 ##                              Vehicules                                  ##
 #############################################################################
 #st.markdown("<u><font size=5>__Vehicules__</font></u>", unsafe_allow_html=True)
-st.write("")
 
 @st.cache_data
 def load_vehicules_2005_2018():
@@ -175,13 +159,6 @@ def load_vehicules_2005_2018():
 
 # Appel
 vehicules = load_vehicules_2005_2018()
-#st.dataframe(vehicules.head())
-
-# info()
-buf = io.StringIO()
-vehicules.info(buf=buf)
-s=buf.getvalue()
-#st.code(s, language="text")
 
 
 #############################################################################
@@ -191,24 +168,35 @@ s=buf.getvalue()
 st.divider()
 
 # Onglets pour organiser ton code existant (colle tes blocs EDA dans les bons onglets)
-tab1, tab2, tab3 = st.tabs(["📥 Chargement", "🔍 Exploration", "🧼 Nettoyage"])
+tab1, tab2, tab3, tab4 = st.tabs(["📥 Chargement", "🔍 Exploration", "🧼 Nettoyage", "XX Dataviz"])
 with tab1:
     st.markdown("#### Aperçu (Caractéristiques)")
     st.dataframe(caracs.head())
     c1, c2, c3 = st.columns(3)
-    c1.metric("Lignes totales:", f"{caracs.shape[0]:,}".replace(",", " "))
+    c1.metric("Lignes totales (sample):", f"{caracs.shape[0]:,}".replace(",", " "))
     c2.metric("Colonnes totales:", caracs.shape[1])
     c3.metric("Mémoire (Mo)", round(caracs.memory_usage(deep=True).sum()/1024**2, 2))
 
     st.markdown("#### Aperçu (Usagers)")
     st.dataframe(usagers.head())
-
+    c1, c2, c3 = st.columns(3)
+    c1.metric("Lignes totales (sample):", f"{usagers.shape[0]:,}".replace(",", " "))
+    c2.metric("Colonnes totales:", usagers.shape[1])
+    c3.metric("Mémoire (Mo)", round(usagers.memory_usage(deep=True).sum()/1024**2, 2))
+   
     st.markdown("#### Aperçu (Lieux)")
     st.dataframe(lieux.head())
-
+    c1, c2, c3 = st.columns(3)
+    c1.metric("Lignes totales (sample):", f"{lieux.shape[0]:,}".replace(",", " "))
+    c2.metric("Colonnes totales:", lieux.shape[1])
+    c3.metric("Mémoire (Mo)", round(lieux.memory_usage(deep=True).sum()/1024**2, 2))
+            
     st.markdown("#### Aperçu (Véhicules)")
     st.dataframe(vehicules.head())
-  
+    c1, c2, c3 = st.columns(3)
+    c1.metric("Lignes totales (sample):", f"{vehicules.shape[0]:,}".replace(",", " "))
+    c2.metric("Colonnes totales:", vehicules.shape[1])
+    c3.metric("Mémoire (Mo)", round(vehicules.memory_usage(deep=True).sum()/1024**2, 2))  
 
 with tab2:
     # info()
@@ -240,69 +228,71 @@ with tab3:
     st.markdown("#### Nettoyages appliqués")
     # ⬇️ colle ici tes transformations (rename, types, fillna...), puis un aperçu
 
-#############################################################################
-##                                DataViz                                  ##
-#############################################################################
-
-#####
-## Nombre d'accident par années (=>sample => 1000 lignes = 1000 accidents)
-#####
-
-# Compter les accidents par année
-caracs.reset_index(drop=True, inplace=True)
-accidents_par_annee = caracs['annee'].value_counts().sort_index()
-
-# Liste complète des années (même si certaines années ont 0 accidents)
-annees = list(range(2005, 2019))                                            #### Filtrer jusqu'en 2009 au lieu de 2019 (pour les tests)
-
-# S'assurer que toutes les années sont présentes, même avec 0
-accidents_par_annee = accidents_par_annee.reindex(annees, fill_value=0)
-
-# Tracer la courbe
-plt.figure(figsize=(6, 4))
-sns.lineplot(x=accidents_par_annee.index, y=accidents_par_annee.values, marker='o')
-plt.title("Évolution du nombre d'accidents par année")
-plt.xlabel("Année")
-plt.ylabel("Nombre d'accidents")
-plt.xticks(annees, rotation=45)
-plt.tight_layout()
-st.pyplot(plt.gcf())
-
-# option 2
-import plotly.express as px
-accidents_par_annee = caracs['annee'].value_counts().sort_index()
-annees = list(range(2005, 2019))                                            #### Filtrer jusqu'en 2009 au lieu de 2019 (pour les tests)
-accidents_par_annee = accidents_par_annee.reindex(annees, fill_value=0)
-fig = px.line(
-    x=accidents_par_annee.index,
-    y=accidents_par_annee.values,
-    markers=True,
-    labels={"x": "Année", "y": "Nombre d'accidents"},
-    title="Évolution du nombre d'accidents par année"
-)
-st.plotly_chart(fig, use_container_width=True)
-
-######
-##  Nombre d'accidents par mois
-######
-# Noms des mois en français
-noms_mois = ['janvier', 'février', 'mars', 'avril', 'mai', 'juin',
-             'juillet', 'août', 'septembre', 'octobre', 'novembre', 'décembre']
-
-# Compter les accidents par mois
-accidents_par_mois = caracs['mois'].value_counts().sort_index()
-
-# Tracé avec palette et suppression du warning via hue
-fig, ax = plt.subplots(figsize=(6, 4))
-sns.barplot(x=noms_mois, y=accidents_par_mois.values, hue=noms_mois, palette="Greens_d", legend=False)
-
-plt.title("Nombre d'accidents par mois")
-plt.xlabel("Mois")
-plt.ylabel("Nombre d'accidents")
-
-# Ajouter plus de ticks sur l'axe Y
-max_y = accidents_par_mois.max()
-plt.yticks(range(0, max_y + 500, 500))                                            #### Filtrer jusqu'en 2009 au lieu de 2019 (pour les tests)
-plt.xticks(rotation=45)
-plt.tight_layout()
-st.pyplot(plt.gcf())
+with tab4:
+    st.markdown("#### Dataviz")
+            #############################################################################
+            ##                                DataViz                                  ##
+            #############################################################################
+            
+            #####
+            ## Nombre d'accident par années (=>sample => 1000 lignes = 1000 accidents)
+            #####
+            
+            # Compter les accidents par année
+            caracs.reset_index(drop=True, inplace=True)
+            accidents_par_annee = caracs['annee'].value_counts().sort_index()
+            
+            # Liste complète des années (même si certaines années ont 0 accidents)
+            annees = list(range(2005, 2019))                                            #### Filtrer jusqu'en 2009 au lieu de 2019 (pour les tests)
+            
+            # S'assurer que toutes les années sont présentes, même avec 0
+            accidents_par_annee = accidents_par_annee.reindex(annees, fill_value=0)
+            
+            # Tracer la courbe
+            plt.figure(figsize=(6, 4))
+            sns.lineplot(x=accidents_par_annee.index, y=accidents_par_annee.values, marker='o')
+            plt.title("Évolution du nombre d'accidents par année")
+            plt.xlabel("Année")
+            plt.ylabel("Nombre d'accidents")
+            plt.xticks(annees, rotation=45)
+            plt.tight_layout()
+            st.pyplot(plt.gcf())
+            
+            # option 2
+            import plotly.express as px
+            accidents_par_annee = caracs['annee'].value_counts().sort_index()
+            annees = list(range(2005, 2019))                                            #### Filtrer jusqu'en 2009 au lieu de 2019 (pour les tests)
+            accidents_par_annee = accidents_par_annee.reindex(annees, fill_value=0)
+            fig = px.line(
+                x=accidents_par_annee.index,
+                y=accidents_par_annee.values,
+                markers=True,
+                labels={"x": "Année", "y": "Nombre d'accidents"},
+                title="Évolution du nombre d'accidents par année"
+            )
+            st.plotly_chart(fig, use_container_width=True)
+            
+            ######
+            ##  Nombre d'accidents par mois
+            ######
+            # Noms des mois en français
+            noms_mois = ['janvier', 'février', 'mars', 'avril', 'mai', 'juin',
+                         'juillet', 'août', 'septembre', 'octobre', 'novembre', 'décembre']
+            
+            # Compter les accidents par mois
+            accidents_par_mois = caracs['mois'].value_counts().sort_index()
+            
+            # Tracé avec palette et suppression du warning via hue
+            fig, ax = plt.subplots(figsize=(6, 4))
+            sns.barplot(x=noms_mois, y=accidents_par_mois.values, hue=noms_mois, palette="Greens_d", legend=False)
+            
+            plt.title("Nombre d'accidents par mois")
+            plt.xlabel("Mois")
+            plt.ylabel("Nombre d'accidents")
+            
+            # Ajouter plus de ticks sur l'axe Y
+            max_y = accidents_par_mois.max()
+            plt.yticks(range(0, max_y + 500, 500))                                            #### Filtrer jusqu'en 2009 au lieu de 2019 (pour les tests)
+            plt.xticks(rotation=45)
+            plt.tight_layout()
+            st.pyplot(plt.gcf())
