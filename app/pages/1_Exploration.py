@@ -97,7 +97,6 @@ def load_caracteristiques_2005_2018():
 
 
 
-
 ####
 
 # KPIs (ex: après avoir chargé caracs)
@@ -114,18 +113,18 @@ with tab1:
     st.markdown("#### Chargement des fichiers")
     # ⬇️ colle ici ton bloc de lecture / concat
     # st.dataframe(caracs.head())
-            # Appel
-            caracs = load_caracteristiques_2005_2018()
-            st.dataframe(caracs.head())
+    # Appel
+    caracs = load_caracteristiques_2005_2018()
+    st.dataframe(caracs.head())
 
 with tab2:
     st.markdown("#### Aperçus & distributions")
     # ⬇️ colle ici tes .head(), .info() (version st.code), histos, countplot, etc.
-            # info()
-            buf = io.StringIO()
-            caracs.info(buf=buf)
-            s=buf.getvalue()
-            st.code(s, language="text")
+    # info()
+    buf = io.StringIO()
+    caracs.info(buf=buf)
+    s=buf.getvalue()
+    st.code(s, language="text")
 
 with tab3:
     st.markdown("#### Nettoyages appliqués")
