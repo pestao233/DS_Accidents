@@ -8,11 +8,11 @@ st.set_page_config(
 )
 
 # Titre principal
-st.title("🚧 Accidents routiers en France — Projet DataScientest / Equipe Enora Lever + Philippe Afonso")
+st.title("🚧 Accidents routiers en France")
 st.caption("Démo Streamlit — exploration, modélisation, prédiction")
 
 with st.sidebar:
-    st.markdown("### 👥 Équipe projet")
+    st.markdown("### 👥 Équipe projet - Cohorte DS JUL25")
     st.markdown("""
     <div style='border:1px solid #ccc; border-radius:10px; padding:10px; background-color:#111827; color:#E5E7EB'>
     <b>Enora Lever</b><br>
