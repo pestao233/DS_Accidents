@@ -94,7 +94,8 @@ def load_caracteristiques_2005_2018():
     caracs = pd.concat(caracteristiques_2005_2018, ignore_index=True)
     return caracs
 
-
+# Appel
+caracs = load_caracteristiques_2005_2018()
 
 
 ####
@@ -112,9 +113,6 @@ tab1, tab2, tab3 = st.tabs(["📥 Chargement", "🔍 Exploration", "🧼 Nettoya
 with tab1:
     st.markdown("#### Chargement des fichiers")
     # ⬇️ colle ici ton bloc de lecture / concat
-    # st.dataframe(caracs.head())
-    # Appel
-    caracs = load_caracteristiques_2005_2018()
     st.dataframe(caracs.head())
 
 with tab2:
