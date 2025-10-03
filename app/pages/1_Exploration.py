@@ -175,28 +175,28 @@ with tab1:
     c1, c2, c3 = st.columns(3)
     c1.metric("Lignes totales (sample):", f"{caracs.shape[0]:,}".replace(",", " "))
     c2.metric("Colonnes totales:", caracs.shape[1])
-    c3.metric("Mémoire (Mo)", round(caracs.memory_usage(deep=True).sum()/1024**2, 2))
+    #c3.metric("Mémoire (Mo)", round(caracs.memory_usage(deep=True).sum()/1024**2, 2))
 
     st.markdown("#### Aperçu (Usagers)")
     st.dataframe(usagers.head())
     c1, c2, c3 = st.columns(3)
     c1.metric("Lignes totales (sample):", f"{usagers.shape[0]:,}".replace(",", " "))
     c2.metric("Colonnes totales:", usagers.shape[1])
-    c3.metric("Mémoire (Mo)", round(usagers.memory_usage(deep=True).sum()/1024**2, 2))
+    #c3.metric("Mémoire (Mo)", round(usagers.memory_usage(deep=True).sum()/1024**2, 2))
    
     st.markdown("#### Aperçu (Lieux)")
     st.dataframe(lieux.head())
     c1, c2, c3 = st.columns(3)
     c1.metric("Lignes totales (sample):", f"{lieux.shape[0]:,}".replace(",", " "))
     c2.metric("Colonnes totales:", lieux.shape[1])
-    c3.metric("Mémoire (Mo)", round(lieux.memory_usage(deep=True).sum()/1024**2, 2))
+    #c3.metric("Mémoire (Mo)", round(lieux.memory_usage(deep=True).sum()/1024**2, 2))
             
     st.markdown("#### Aperçu (Véhicules)")
     st.dataframe(vehicules.head())
     c1, c2, c3 = st.columns(3)
     c1.metric("Lignes totales (sample):", f"{vehicules.shape[0]:,}".replace(",", " "))
     c2.metric("Colonnes totales:", vehicules.shape[1])
-    c3.metric("Mémoire (Mo)", round(vehicules.memory_usage(deep=True).sum()/1024**2, 2))  
+    #c3.metric("Mémoire (Mo)", round(vehicules.memory_usage(deep=True).sum()/1024**2, 2))  
 
 with tab2:
     # info()
