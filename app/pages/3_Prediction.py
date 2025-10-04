@@ -9,7 +9,7 @@ st.title("🎯 Démo de prédiction")
 
 # ACCIDENT: Colonnes vraiment nécessaires
 FEATURES = ["lum","secu","col","moment","situ","catv","obs","grav_order"]  
-df = pd.read_csv("data/sample_merged_accident.csv",
+df = pd.read_csv("data/sample_merged_accident_mini.csv",
                  usecols=FEATURES,
                  nrows=5000,
                  low_memory=False)
@@ -18,7 +18,7 @@ df = pd.read_csv("data/sample_merged_accident.csv",
 # USAGER: Colonnes vraiment nécessaires
 FEATURES = ["lum","secu","col","moment","situ","catv","obs","grav_order"]  
 
-df = pd.read_csv("data/sample_merged_usager.csv",
+df = pd.read_csv("data/sample_merged_usager_mini.csv",
                  usecols=FEATURES,
                  nrows=5000,
                  low_memory=False)
