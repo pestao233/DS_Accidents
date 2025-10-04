@@ -9,6 +9,7 @@ import plotly.express as px
 import warnings
 warnings.filterwarnings("ignore")
 import io
+from PIL import Image
 
 # 1) largeur de page : "centered" ou "wide"
 st.set_page_config(layout="centered", page_title="Accidents routiers", page_icon="🚧")
@@ -168,7 +169,7 @@ vehicules = load_vehicules_2005_2018()
 st.divider()
 
 # Onglets pour organiser ton code existant (colle tes blocs EDA dans les bons onglets)
-tab1, tab2, tab3, tab4 = st.tabs(["📥 Chargement", "🔍 Exploration", "🧼 Nettoyage", "XX Dataviz"])
+tab1, tab2, tab3, tab4 = st.tabs(["📥 Chargement", "🔍 Exploration", "🧼 Nettoyage", "📊 Dataviz"])
 with tab1:
     st.markdown("#### Aperçu (Caractéristiques)")
     st.dataframe(caracs.head())
@@ -238,61 +239,8 @@ with tab4:
     ## Nombre d'accident par années (=>sample => 1000 lignes = 1000 accidents)
     #####
             
-    # Compter les accidents par année
-    caracs.reset_index(drop=True, inplace=True)
-    accidents_par_annee = caracs['annee'].value_counts().sort_index()
-            
-    # Liste complète des années (même si certaines années ont 0 accidents)
-    annees = list(range(2005, 2019))                                            #### Filtrer jusqu'en 2009 au lieu de 2019 (pour les tests)
-            
-    # S'assurer que toutes les années sont présentes, même avec 0
-    accidents_par_annee = accidents_par_annee.reindex(annees, fill_value=0)
-            
-    # Tracer la courbe
-    plt.figure(figsize=(6, 4))
-    sns.lineplot(x=accidents_par_annee.index, y=accidents_par_annee.values, marker='o')
-    plt.title("Évolution du nombre d'accidents par année")
-    plt.xlabel("Année")
-    plt.ylabel("Nombre d'accidents")
-    plt.xticks(annees, rotation=45)
-    plt.tight_layout()
-    st.pyplot(plt.gcf())
-            
-    # option 2
-    import plotly.express as px
-    accidents_par_annee = caracs['annee'].value_counts().sort_index()
-    annees = list(range(2005, 2019))                                            #### Filtrer jusqu'en 2009 au lieu de 2019 (pour les tests)
-    accidents_par_annee = accidents_par_annee.reindex(annees, fill_value=0)
-    fig = px.line(
-                x=accidents_par_annee.index,
-                y=accidents_par_annee.values,
-                markers=True,
-                labels={"x": "Année", "y": "Nombre d'accidents"},
-                title="Évolution du nombre d'accidents par année"
-            )
-    st.plotly_chart(fig, use_container_width=True)
-            
-    ######
-    ##  Nombre d'accidents par mois
-    ######
-    # Noms des mois en français
-    noms_mois = ['janvier', 'février', 'mars', 'avril', 'mai', 'juin',
-                         'juillet', 'août', 'septembre', 'octobre', 'novembre', 'décembre']
-            
-    # Compter les accidents par mois
-    accidents_par_mois = caracs['mois'].value_counts().sort_index()
-            
-    # Tracé avec palette et suppression du warning via hue
-    fig, ax = plt.subplots(figsize=(6, 4))
-    sns.barplot(x=noms_mois, y=accidents_par_mois.values, hue=noms_mois, palette="Greens_d", legend=False)
-            
-    plt.title("Nombre d'accidents par mois")
-    plt.xlabel("Mois")
-    plt.ylabel("Nombre d'accidents")
-            
-    # Ajouter plus de ticks sur l'axe Y
-    max_y = accidents_par_mois.max()
-    plt.yticks(range(0, max_y + 500, 500))                                            #### Filtrer jusqu'en 2009 au lieu de 2019 (pour les tests)
-    plt.xticks(rotation=45)
-    plt.tight_layout()
-    st.pyplot(plt.gcf())
+    # Chargement de graphes issus du notebook
+    for name in ["Evol_acc_annee.png","Evol_acc_mois.png","Repart_moment.png", "Repart_age.png", "Repart_sexe.png", "Repart_Trajet.png", "Repart_Gravité.png","Dist_agg_grav.png", "Dist_int_grav.png", "Dist_lum_grav.png", "Dist_secu_grav.png", "Corr_var_expl_Grav.png", "Corr_var_expl.png"]:
+        st.image(f"reports/{name}", width=200, use_container_width=True)
+        st.divider()
+
