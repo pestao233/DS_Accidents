@@ -1,5 +1,27 @@
 import streamlit as st
 
+# 1) largeur de page : "centered" ou "wide"
+st.set_page_config(layout="centered", page_title="Accidents routiers", page_icon="🚧")
+
+# 2) CSS simple : largeur max + tailles + espacement
+st.markdown("""
+<style>
+/* largeur max du contenu */
+.main .block-container {max-width: 1100px; padding-top: 1.5rem; padding-bottom: 4rem;}
+/* titres */
+h1, h2, h3 { letter-spacing: .2px; }
+h1 { font-size: 1.9rem !important; }
+h2 { font-size: 1.4rem !important; margin-top: 1.2rem; }
+/* paragraphes */
+p, li { line-height: 1.6; font-size: 0.98rem; }
+/* séparateurs plus discrets */
+hr { margin: .8rem 0 1.2rem 0; opacity: .4; }
+/* badges */
+.badge { display:inline-block; padding: .15rem .5rem; border-radius: .5rem; background:#111827; color:#E5E7EB; font-size:.75rem; }
+.card { border:1px solid rgba(255,255,255,.1); border-radius: 12px; padding: .9rem 1rem; margin:.4rem 0; }
+</style>
+""", unsafe_allow_html=True)
+
 # Configuration de la page
 st.set_page_config(
     page_title="Accidents routiers - DataScientest - Cohorte DS JUL25",
@@ -26,13 +48,14 @@ Présentation du Projet sur **Streamlit**
 
 Utilisez le menu de gauche pour naviguer :
 - **Exploration des données (variables explicatives + cible)** 
-- **Préparation des données**
 - **Modélisation** (entraînement de modèles RandomForest / HGB / .. + affichage de métriques)
 - **Prédiction** : faire une prédiction sur de nouvelles données
 """)
 
+st.divider()
+
 # Contexte
-st.markdown("<u>__Contexte__</u>", unsafe_allow_html=True)
+st.markdown('<h2>Contexte</h2>', unsafe_allow_html=True)
 st.write("""La sécurité routière constitue un enjeu majeur de santé publique et économique.
 En France, plusieurs dizaines de milliers d’accidents corporels surviennent chaque année, provoquant des blessures, des décès et des coûts importants pour la société.
 L’amélioration de la compréhension des facteurs influençant la gravité des accidents permettrait d’orienter les politiques publiques et  de mieux cibler les actions de sensibilisation et les campagnes de prévention.
@@ -40,8 +63,11 @@ Dans ce cadre, notre projet vise à analyser et à modéliser les données d’a
 La problématique est un problème de classification supervisée : prédire une variable catégorielle (gravité) à partir de données hétérogènes (environnement, usagers, véhicules).
 """)
 
+st.divider()
+
+
 # Objectifs
-st.markdown("<u>__Objectifs__:</u>", unsafe_allow_html=True)
+st.markdown('<h2>Objectifs</h2>', unsafe_allow_html=True)
 st.write("""
 L’objectif principal de ce projet est de mettre en place un pipeline complet de Data Science comprenant :
 - L’exploration et compréhension des données mises à disposition par le ministère de l’intérieur.
