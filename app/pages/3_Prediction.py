@@ -28,6 +28,7 @@ st.title("🎯 Démo de prédiction")
 FEATURES = ["lum","secu","col","obs", "catv","situ", "agg", "surf","atm"]  
 df_full = pd.read_csv("data/df_accidents_final_sample.csv",
                  sep=";",
+                 skiprows=1,    # J'ai ajouté ce saut car une ligne est apparue dans ce df en 1ere ligne!??
                  nrows=100,
                  low_memory=False)
 df = df_full[(df_full[["lum","secu","col","obs", "catv","situ", "agg", "surf","atm"]] != -1).all(axis=1)]
