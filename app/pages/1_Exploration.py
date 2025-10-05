@@ -324,7 +324,273 @@ with tab2:
             
 with tab3:
     st.markdown("#### Nettoyages appliqués")
-    # ⬇️ colle ici tes transformations (rename, types, fillna...), puis un aperçu
+    
+    st.write("### Préparation des données")
+    st.write(""" Pour préparer au mieux les données en vue de la modélisation, nous avons testé deux approches :
+    - la première consistait à prétraiter chaque DataFrame séparément avant de les fusionner,
+    - La seconde visait à fusionner l’ensemble des fichiers bruts avant d’appliquer un prétraitement global.
+    Les deux méthodes ont conduit à des résultats relativement similaires. 
+    
+    Cependant, afin de limiter la perte d’informations et de lignes d’accidents lors du traitement post-fusion, nous avons retenu la seconde approche : fusionner puis traiter.
+    """)
+
+    st.code("""
+    # On merge les différents DataFrame en un seul                
+    df_merge_accident = caracs
+        .merge(vehicules, on='Num_Acc', how='left', suffixes=('', '_veh')) 
+        .merge(usagers, on='Num_Acc', how='left', suffixes=('', '_usag')) 
+        .merge(lieux, on='Num_Acc', how='left', suffixes=('', '_lieu'))
+    """, language="python")
+
+    st.write("### Gestion des valeurs manquantes et des doublons")
+    st.write("""Le premier défi auquel nous avons été confronté lors du pré-traitement a été la **gestion des valeurs manquantes et des doublons**.
+    Ces doublons provenaient du fait qu’un même accident pouvait apparaître plusieurs fois dans le jeu de données, notamment lorsqu’il était décrit au niveau des **véhicules** ou des **usagers**.
+    
+    Comme notre objectif était d’analyser la gravité de l’accident, nous avons réencodé et agrégé certaines variables afin d’obtenir un jeu de données unique, contenant **une seule ligne par accident**.
+                
+    Par ailleurs, les accidents comportent un grand nombre de facteurs — tels que le lieu, la présence éventuelle de piétons, l’équipement de sécurité, ou encore le type de véhicule — ce qui a entraîné 
+            la présence de **nombreuses valeurs manquantes dans certaines variables**.      
+            """)
+    st.write("###### insérer une image")
+    
+    st.write("### Gestion des Nans")
+    st.write("""Le DataFrame final comportait plusieurs colonnes inutiles pour notre analyse que nous avons supprimés directement""")
+    
+    st.code("""
+    # On supprime les colonnes inutiles               
+    df_merge_accident = df_merge_accident.drop(['voie', 'annee','adr', 'gps', 'lat', 'long', 'vosp', 'v1', 'v2', 'pr', 'pr1', 'plan', 'env1'], axis = 1)
+    """, language="python")
+
+    st.code("""
+    # On supprime les nans lorsqu'il y en a très peu             
+    df_merge_accident = df_merge_accident.dropna(subset=['atm', 'col', 'com', 'catr', 'choc', 'manv', 'senc'])
+    """, language="python")
+
+    st.write("""Afin d’éviter les biais liés aux valeurs manquantes, nous avons appliqué un **remplissage différencié selon le type de variable** :
+    les champs catégoriels inconnus ont été codés par **-1**, les valeurs binaires absentes par **0**, et certaines variables numériques par leur **valeur médiane**.
+            """)
+
+    with st.expander("Afficher le code"):
+        st.code("""
+        ## On remplace les Nans de obs et obm par -1
+        df_merge_accident[['obs', 'obsm']] = df_merge_accident[['obs', 'obsm']].fillna(-1)
+            
+        # lartpc : NaN = pas de TPC
+        df_merge_accident['lartpc'] = df_merge_accident['lartpc'].fillna(0)
+
+        # larrout : NaN = inconnu / non mesuré
+        df_merge_accident['larrout'] = df_merge_accident['larrout'].fillna(-1)
+
+        # prof : inconnu
+        df_merge_accident['prof'] = df_merge_accident['prof'].fillna(-1)
+
+        # nbv : médiane 
+        df_merge_accident['nbv'] = df_merge_accident['nbv'].fillna(df_merge_accident['nbv'].median())
+
+        # circ : inconnu
+        df_merge_accident['circ'] = df_merge_accident['circ'].fillna(-1)
+
+        # infra : NaN = aucun aménagement particulier
+        df_merge_accident['infra'] = df_merge_accident['infra'].fillna(0)
+
+        # situ : inconnu
+        df_merge_accident['situ'] = df_merge_accident['situ'].fillna(-1)""", language="python")
+
+    st.write("""Afin de mieux pouvoir utiliser certaines variables, mais également afin de supprimer les doublons, et de n'obtenir qu'une ligne par accident, nous avont réencoder plusieurs variables""")
+
+    st.write("### Transformation des variables 'sécurité', et 'num_veh'")
+    st.write("""Nous avons **fusionné les informations de la variable sécurité**, qui distinguait la présence et l’utilisation d’un équipement à travers une valeur numérique, afin d’obtenir **une seule variable** indiquant simplement **si un équipement a été utilisé ou non**.
+
+    De plus, la colonne **num_veh a été supprimée** et remplacée par une variable correspondant au **nombre de véhicules impliqués dans chaque accident**.
+    """)
+    with st.expander("Exemple code variable sécurité"):
+        st.code("""
+    #Si équipement utilisé, on l'indique. Si pas utilisé on met 0, si non déterminable, on met 3.
+    def decode_secu(val):
+        if pd.isna(val):
+            return -1
+        val = int(val)
+        equipement = val // 10
+        usage = val % 10
+        if usage == 1:
+            return equipement
+        elif usage == 2:
+            return 0
+        elif usage == 3:
+            return -1
+        else:
+            return -1  # cas imprévu
+    df_merge_accident['secu'] = df_merge_accident['secu'].apply(decode_secu).astype('Int64')
+            """, language="python")
+
+
+    st.write("### Réencodage")
+    st.write("""Afin de supprimer les doublons, et de n'obtenir qu'une ligne par accident, nous avont réencoder plusieurs variables.""")
+
+    st.write("""Nous avons créé plusieurs familles afin de regrouper les variables et avons créé un OneHotEncoder lorsque nécessaire""")
+
+    st.write("""Il était parfois necessaire d'effectuer des tests de Chi et Cramer pour comprendre l'importance des variables par rapport à la variable cible.
+    Nous avons également dû analyser leur répartition pour comprendre comment les encoder""")
+
+    with st.expander("Exemple de code pour la variable choc"):
+        st.code("""
+        ##Colonne choc, on réduit le nombre de colonnes 
+        ## Créer les 4 familles directement
+        df_merge_accident['choc_avant']    = df_merge_accident['choc'].isin([1,2,3]).astype(int)
+        df_merge_accident['choc_arriere']  = df_merge_accident['choc'].isin([4,5,6]).astype(int)
+        df_merge_accident['choc_lateral']  = df_merge_accident['choc'].isin([7,8]).astype(int)
+        df_merge_accident['choc_multiple'] = (df_merge_accident['choc'] == 9).astype(int)
+
+        ## Agréger pour avoir une ligne par accident
+        choc_flags = (df_merge_accident.groupby('Num_Acc', as_index=False)
+                        [['choc_avant','choc_arriere','choc_lateral','choc_multiple']]
+                        .max())
+        """, language="python")
+
+    st.write("###### Variable surf")
+    st.write("""
+    - Normal : 1 
+    - Défavorable : 0   
+    - Inconnu : -1""")
+
+    st.write("###### Variable Sexe")
+    st.write("""On a divisé la colonne sexe en deux colonnes : Homme et Femme""")
+
+    st.write("###### Variable place")
+    st.write("""
+    - Conducteur : place 1
+    - Passager avant : place 2
+    - Passager arrière : places 3 à 6
+    - Autres / indéterminé : places 7, 8, 9, 0""")
+
+    st.write("###### Variable Trajet")
+    st.write("""
+    - 0: "Inconnu"
+    - 1: "Travail"        
+    - 4: "Professionnel"   
+    - 5: "Loisirs"          
+    - 2, 3, 9: "Autre"
+            """)          
+
+    st.write("###### Variable âge")
+    st.write("""
+    Nous avons vérifié si les valeurs aberrantes provenaient de fautes de frappe pouvant être corrigées, ce qui n’était pas le cas.
+
+    Comme avec les Nans, elles représentaient **moins de 1%** des données, nous avons choisi de les éliminer, en les remplaçant par la médiane ±5.
+    Enfin, nous avons regroupé les individus par classes d’âge afin de faciliter l’analyse.
+    - age < 18: "Enfant"
+    - age < 30: "Jeune"
+    - age < 60: "Adulte"
+    - age > 60: "Senior"
+            """)
+
+    st.write("### La variable cible : Variable gravité :")
+    st.write("""Variable gravité
+    La variable gravité est la variable que nous souhaitons prédire, nous l'avons réparti en 4 classes :
+    - 1:"Indemne" 
+    - 2:"Tué"
+    - 3:"Blessé hospitalisé"
+    - 4:"Blessé léger" 
+    Nous avons ensuite créée une variable, en sélectionnant la gravité maximale de l'accident  """)
+
+    st.code("""label_grav = {1:"Indemne", 2:"Tué", 3:"Blessé hospitalisé", 4:"Blessé léger"}
+    ordre_gravite = {1:0, 4:1, 3:2, 2:3}  # échelle: indemne < léger < hosp < tué
+
+    u = df_merge_accident.copy()
+
+    # Colonnes indicatrices par usager
+    u['tue']   = (u['grav'] == 2).astype(int)
+    u['hosp']  = (u['grav'] == 3).astype(int)
+    u['leger'] = (u['grav'] == 4).astype(int)
+    u['indem'] = (u['grav'] == 1).astype(int)
+
+    # Gravité max
+    u['grav_order'] = u['grav'].map(ordre_gravite)
+
+    accident = u.groupby('Num_Acc').agg(grav_order_max = ('grav_order', 'max')).reset_index()""", language="python")
+
+    st.write("### Traitement des variables catégorielles et réduction de la colinéarité :")
+    st.write("""Lorsque des OneHotEncoding avait été appliqué, nous avons supprimé une modalité de référence pour chaque variable afin d’éviter la colinéarité.
+    Les colonnes redondantes ou apportant des informations similaires ont également été retirées pour simplifier et stabiliser le jeu de données.
+    """)
+
+    st.write("###### Variable hrmn")                  
+    st.write("""Nous avons encodé hrmn en deux variables "heure" et "minute".      
+    Nous avons supprimé minute.""")
+
+    st.write("### Train/test split")
+    st.code("""from sklearn.preprocessing import StandardScaler
+
+    scaler = StandardScaler(with_mean=False)
+    scaler.fit(X_train_transformed)
+
+    X_train_scaled = scaler.transform(X_train_transformed)
+    X_test_scaled = scaler.transform(X_test_transformed)""", language="python")
+
+    st.write("### Encodage des variables catégorielles")
+    st.write("""Les colonnes heure, jour et mois créant probablement une mauvais information, nous les avons traités comme des variables catégorielles
+    """)
+    st.code("""cat_cols = ["mois", "jour", "heure"]
+    num_cols = X.columns.difference(cat_cols)
+
+    # Prétraitement catégorielles (One-Hot)
+    cat_tf = Pipeline([("ohe", OneHotEncoder(handle_unknown="ignore", drop="first"))])
+
+    # ColumnTransformer
+    preprocess = ColumnTransformer([
+        ("num", "passthrough", num_cols),
+        ("cat", cat_tf, cat_cols),
+    ])
+            
+    # Fit uniquement sur le train
+    preprocess.fit(X_train)
+
+    # Transforme train et test
+    X_train_transformed = preprocess.transform(X_train)
+    X_test_transformed = preprocess.transform(X_test)
+            """, language="python")
+
+    st.write("### Normalisation et rééquilibrage des classes")
+    st.write("""Nous avons remarqué que nous avions un déséquilibre des classes, que nous avons traité 
+    """)
+
+    st.write("""Comme nous avons rencontré à plusieurs reprise des problèmes de mémoire, nous avons d'abord opté pour un undersampling léger, puis ensuite un SMOTE afin de rééquilibrer 
+    """)
+
+    st.write("#### Normalisation ")
+    st.code("""
+    #Normalisation
+
+    scaler = StandardScaler(with_mean=False)
+    scaler.fit(X_train_transformed)
+
+    X_train_scaled = scaler.transform(X_train_transformed)
+    X_test_scaled = scaler.transform(X_test_transformed)
+    """, language="python")
+
+    st.write("#### Oversampling et Undersampling ")
+    st.code("""
+    from collections import Counter
+    from imblearn.under_sampling import RandomUnderSampler
+    from imblearn.over_sampling import SMOTE
+
+    # Undersampling léger
+    # On réduit un peu la classe majoritaire sans tomber au niveau des minoritaires
+    cnt = Counter(y_train)
+    strategy_under = {
+        2: int(cnt[2] * 0.5),  
+        3: int(cnt[3] * 0.8),  
+        4: cnt[4]              
+    }
+
+    rus = RandomUnderSampler(sampling_strategy=strategy_under, random_state=42)
+    X_train_under, y_train_under = rus.fit_resample(X_train_scaled, y_train)
+    print("Après undersampling :", Counter(y_train_under))
+
+    # Oversampling (SMOTE) pour équilibrer
+    smote = SMOTE(sampling_strategy='auto', random_state=42, k_neighbors=3)
+    X_train_bal, y_train_bal = smote.fit_resample(X_train_under, y_train_under)
+    """, language="python")
 
 with tab4:
     st.markdown("#### Dataviz")
