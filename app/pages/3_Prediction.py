@@ -45,7 +45,7 @@ row = df.iloc[index].copy()
 st.write("Voici la ligne choisie:")
 st.dataframe(pd.DataFrame([row]), use_container_width=True)
 
-st.info(f"👉 Gravité réelle (dans le dataset) : **{row["grav_order_max"]}**")
+st.info(f"👉 Gravité réelle (dans le dataset) : **{row['grav_order_max']}**")
 
 # Exemple : quelques variables à modifier
 opts_lum = sorted(df["lum"].dropna().astype(int).unique().tolist())
@@ -107,7 +107,7 @@ st.dataframe(pd.DataFrame([row]), use_container_width=True)
 # Bouton de prédiction
 if st.button("Lancer la prédiction"):
     X = pd.DataFrame([row])
-    #X = X.drop(["grav_simpl","grav_order_max"], axis=1)
+    X = X.drop(["grav_simpl"], axis=1)
     for file in ["Modele_Full.joblib"]:
         r = requests.get(base_url + file)
         open(file, "wb").write(r.content)
@@ -117,6 +117,6 @@ if st.button("Lancer la prédiction"):
 
     st.success(f"👉 Résultat de la prédiction : **{y_pred}**")
 
-    if hasattr(model, "predict_proba"):
-        st.caption(f"Confiance (proba max) : {model.predict_proba(X).max():.3f}")
+    if hasattr(rf, "predict_proba"):
+        st.caption(f"Confiance (proba max) : {rf.predict_proba(X).max():.3f}")
 #caption("Le modèle utilise un pipeline pré-entraîné sur les données 2005–2018.")
