@@ -51,15 +51,15 @@ st.markdown("<u><font size=5>__Cadre__</u>", unsafe_allow_html=True)
 st.write("""
 Les données proviennent de la base publique des accidents corporels de la circulation en France, disponibles via data.gouv.fr. 
 Nous avons utilisé les fichiers annuels entre 2005 et 2018, structurés en quatre tables :
-- caracteristiques : infos principales sur l’accident (date, heure, luminosité, lieu, météo, etc.)
-- lieux : configuration de la route et conditions d'infrastructure
-- vehicules : type de véhicules impliqués et point d'impact
-- usagers : profil et gravité des personnes impliquées
+- **caracteristiques** : infos principales sur l’accident (date, heure, luminosité, lieu, météo, etc.)
+- **lieux** : configuration de la route et conditions d'infrastructure
+- **vehicules** : type de véhicules impliqués et point d'impact
+- **usagers** : profil et gravité des personnes impliquées
 Une difficulté notable a été la gestion de l’hétérogénéité entre fichiers annuels : encodages variables (latin1 ou utf-8), séparateurs différents (, ou \t), colonnes présentes ou absentes selon l'année.
 
-Un script de lecture automatique a été mis en place pour charger les 4 tables par année en homogénéisant les formats.
-La volumétrie est importante : chaque fichier annuel contient plusieurs dizaines de milliers de lignes, pour un total d’environ 1 million d’accidents sur la période étudiée.
-Nous avons aussi contrôlé la cohérence des identifiants Num_Acc entre les tables et aucune différence identifiée.
+Un script de lecture automatique a été mis en place pour charger les 4 tables par année en homogénéisant les formats.\n
+La volumétrie est importante : chaque fichier annuel contient plusieurs dizaines de milliers de lignes, pour un total d’environ 1 million d’accidents sur la période étudiée.\n
+Nous avons aussi contrôlé la cohérence des identifiants Num_Acc entre les tables et aucune différence identifiée.\n
 Nous avons également dans ces fichiers beaucoup de variables qui ne sont pas pertinentes pour notre étude.
 Il a donc fallu évaluer leur pertinence afin de décider de les garder ou non.
 """)
@@ -171,7 +171,7 @@ st.divider()
 # Onglets pour organiser ton code existant (colle tes blocs EDA dans les bons onglets)
 tab1, tab2, tab3, tab4 = st.tabs(["📥 Chargement", "🔍 Exploration", "🧼 Nettoyage", "📊 Dataviz"])
 with tab1:
-    st.markdown("#### Aperçu (Caractéristiques)")
+    st.markdown("#### Aperçu du DataFrame : `Caractéristiques`")
     st.dataframe(caracs.head())
     c1, c2, c3 = st.columns(3)
     c1.metric("Lignes totales (full):", "958 469")
@@ -179,7 +179,9 @@ with tab1:
     c3.metric("Colonnes totales:", caracs.shape[1])
     #c3.metric("Mémoire (Mo)", round(caracs.memory_usage(deep=True).sum()/1024**2, 2))
 
-    st.markdown("#### Aperçu (Usagers)")
+    st.divider()
+
+    st.markdown("#### Aperçu du DataFrame : `Usagers`")
     st.dataframe(usagers.head())
     c1, c2, c3 = st.columns(3)
     c1.metric("Lignes totales (full):", "2 142 195")
@@ -187,7 +189,9 @@ with tab1:
     c3.metric("Colonnes totales:", usagers.shape[1])
     #c3.metric("Mémoire (Mo)", round(usagers.memory_usage(deep=True).sum()/1024**2, 2))
    
-    st.markdown("#### Aperçu (Lieux)")
+    st.divider()
+
+    st.markdown("#### Aperçu du DataFrame : `Lieux`")
     st.dataframe(lieux.head())
     c1, c2, c3 = st.columns(3)
     c1.metric("Lignes totales (full):", "958 469")
@@ -195,7 +199,9 @@ with tab1:
     c3.metric("Colonnes totales:", lieux.shape[1])
     #c3.metric("Mémoire (Mo)", round(lieux.memory_usage(deep=True).sum()/1024**2, 2))
             
-    st.markdown("#### Aperçu (Véhicules)")
+    st.divider()
+
+    st.markdown("#### Aperçu du DataFrame : `Véhicules`")
     st.dataframe(vehicules.head())
     c1, c2, c3 = st.columns(3)
     c1.metric("Lignes totales (full):", "1 635 811")
@@ -206,7 +212,7 @@ with tab1:
 with tab2:
     # info()
     # Carac
-    st.subheader("Résumé du DataFrame `Caractéristiques` (df.info)")
+    st.subheader("Résumé du DataFrame : `Caractéristiques`")
     st.code("""
     <class 'pandas.core.frame.DataFrame'>
     RangeIndex: 958469 entries, 0 to 958468
@@ -233,9 +239,11 @@ with tab2:
     dtypes: float64(3), int64(8), object(6)
     """)
 
+    st.divider()
+
 
     # Usagers
-    st.subheader("Résumé du DataFrame `Usagers` (df.info)")
+    st.subheader("Résumé du DataFrame : `Usagers`")
     st.code("""
     <class 'pandas.core.frame.DataFrame'>
     RangeIndex: 2142195 entries, 0 to 2142194
@@ -258,8 +266,10 @@ with tab2:
     dtypes: float64(7), int64(5), object(1)
     """)
     
+    st.divider()
+
     # Lieux
-    st.subheader("Résumé du DataFrame `Lieux` (df.info)")
+    st.subheader("Résumé du DataFrame : `Lieux`")
     st.code("""
     <class 'pandas.core.frame.DataFrame'>
     RangeIndex: 958469 entries, 0 to 958468
@@ -288,8 +298,10 @@ with tab2:
     dtypes: float64(15), int64(2), object(2)
     """)
             
+    st.divider()
+
     # Vehicules
-    st.subheader("Résumé du DataFrame `Vehicules` (df.info)")
+    st.subheader("Résumé du DataFrame `Vehicules`")
     st.code("""
     <class 'pandas.core.frame.DataFrame'>
     RangeIndex: 1635811 entries, 0 to 1635810
