@@ -73,9 +73,9 @@ L’objectif principal de ce projet est de mettre en place un pipeline complet d
 - L’**exploration et compréhension** des données mises à disposition par le ministère de l’intérieur
 - L’identification des **variables pertinentes** et pré-traitement des données
 - La préparation d’un **jeu de données exploitable**
-- La modélisation prédictive à l'aide d'algorithmes de machine learning
-- L'évaluation et la comparaison des performances selon plusieurs métriques (precision, recall, F1-score)
-- Et enfin, la mise en forme des livrables dans Streamlit (visualiser les analyses et de tester le modèle en temps réel)
+- La **modélisation** prédictive à l'aide d'algorithmes de machine learning
+- L**'évaluation et la comparaison** des performances selon plusieurs métriques (precision, recall, F1-score)
+- Et enfin, la mise en forme des livrables dans Streamlit (**visualiser** les analyses et de **tester** le modèle en temps réel)
 
 Notre démarche est donc progressive :
 1.	partir d’une **exploration** descriptive des données,
