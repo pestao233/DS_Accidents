@@ -33,7 +33,7 @@ df = pd.read_csv("data/X_test_encoded_sample.csv",
                  low_memory=False)
 #df = df_full[(df_full[["lum","secu","col","obs", "catv","situ", "agg", "surf","atm"]] != -1).all(axis=1)]
 
-y = pd.read_csv("data/y.csv",
+y = pd.read_csv("data/y_test_encoded_sample.csv",
                 sep=",",
                 nrows=100)
 
@@ -49,7 +49,7 @@ row = df.iloc[index].copy()
 st.write("Voici la ligne choisie:")
 st.dataframe(pd.DataFrame([row]), use_container_width=True)
 
-st.info(f"👉 Gravité réelle (dans le dataset) : **{y.iloc[index]}**")
+st.info(f"👉 Gravité réelle (dans le dataset) : **{y.iloc[index,0]}**")
 
 # Exemple : quelques variables à modifier
 opts_lum = sorted(df["lum"].dropna().astype(int).unique().tolist())
@@ -112,14 +112,18 @@ st.dataframe(pd.DataFrame([row]), use_container_width=True)
 if st.button("Lancer la prédiction"):
     X = pd.DataFrame([row])
     #X = X.drop(["grav_simpl"], axis=1)
-    for file in ["models/Enora_scaler.joblib","models/Modele_Enora_rf.joblib"]:
+    for file in ["Enora_scaler.joblib","Modele_Enora_rf.joblib"]:
         r = requests.get(base_url + file)
         open(file, "wb").write(r.content)
 
-    rf = joblib.load("Modele_Full.joblib")
-    y_pred = rf.predict(X)[0]
+    scaler = joblib.load("Enora_scaler.joblib")
+    rf = joblib.load("Modele_Enora_rf.joblib")
 
-    st.success(f"👉 Résultat de la prédiction : **{y_pred}**")
+    X_scaled = scaler.transform(X)
+    
+    y_pred = rf.predict(X_scaled)[0]
+
+    st.success(f"👉 Résultat de la prédiction : **{int(y_pred)}**")
 
     if hasattr(rf, "predict_proba"):
         st.caption(f"Confiance (proba max) : {rf.predict_proba(X).max():.3f}")
