@@ -26,12 +26,16 @@ st.title("🎯 Démo de prédiction")
 #                 low_memory=False)
 
 FEATURES = ["lum","secu","col","obs", "catv","situ", "agg", "surf","atm"]  
-df_full = pd.read_csv("data/df_accidents_final_sample.csv",
-                 sep=";",
-                 skiprows=1,    # J'ai ajouté ce saut car une ligne est apparue dans ce df en 1ere ligne!??
+df = pd.read_csv("data/X_test_encoded_sample.csv",
+                 sep=",",
+                 #skiprows=1,    # J'ai ajouté ce saut car une ligne est apparue dans ce df en 1ere ligne!??
                  nrows=100,
                  low_memory=False)
-df = df_full[(df_full[["lum","secu","col","obs", "catv","situ", "agg", "surf","atm"]] != -1).all(axis=1)]
+#df = df_full[(df_full[["lum","secu","col","obs", "catv","situ", "agg", "surf","atm"]] != -1).all(axis=1)]
+
+y = pd.read_csv("data/y.csv",
+                sep=",",
+                nrows=100)
 
 base_url = "https://github.com/pestao233/DS_Accidents/releases/download/v1.0/"
 
@@ -45,7 +49,7 @@ row = df.iloc[index].copy()
 st.write("Voici la ligne choisie:")
 st.dataframe(pd.DataFrame([row]), use_container_width=True)
 
-st.info(f"👉 Gravité réelle (dans le dataset) : **{row['grav_order_max']}**")
+st.info(f"👉 Gravité réelle (dans le dataset) : **{y.iloc[index]}**")
 
 # Exemple : quelques variables à modifier
 opts_lum = sorted(df["lum"].dropna().astype(int).unique().tolist())
@@ -107,8 +111,8 @@ st.dataframe(pd.DataFrame([row]), use_container_width=True)
 # Bouton de prédiction
 if st.button("Lancer la prédiction"):
     X = pd.DataFrame([row])
-    X = X.drop(["grav_simpl"], axis=1)
-    for file in ["Modele_Full.joblib"]:
+    #X = X.drop(["grav_simpl"], axis=1)
+    for file in ["models/Enora_scaler.joblib","models/Modele_Enora_rf.joblib"]:
         r = requests.get(base_url + file)
         open(file, "wb").write(r.content)
 
