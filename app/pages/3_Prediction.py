@@ -47,7 +47,7 @@ index = st.number_input("Numéro de ligne de référence", min_value=1, max_valu
 row = df.iloc[index].copy()
 
 st.write("Voici la ligne choisie:")
-st.dataframe(pd.DataFrame([row[FEATURES]]), use_container_width=True)
+st.dataframe(pd.DataFrame([row[:40]]), use_container_width=True)
 
 st.info(f"👉 Gravité réelle (dans le dataset) : **{y.iloc[index,0]}**")
 
@@ -106,7 +106,7 @@ if "atm" in df.columns: # atm=3(pluie forte), 5(brouillard), 6 (vent fort)
 st.divider()
 
 st.write("**Observation envoyée au modèle (après modification) :**")
-st.dataframe(pd.DataFrame([row[FEATURES]]), use_container_width=True)
+st.dataframe(pd.DataFrame([row[:40]]), use_container_width=True)
 
 
 
