@@ -619,7 +619,6 @@ with tab3:
          - Le soir suit en intensité (baisse de luminosité + fatigue accrue)
          - Le matin a une contribution modérée  
          - La nuit (0h-6h) est la moins fréquentée, mais les accidents qui y surviennent peuvent être plus graves  
-         - À renforcer : l'analyse de la **gravité** par plage horaire, pour distinguer "nombre" vs "impact"
          """)
          st.divider()
 
