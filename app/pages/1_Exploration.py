@@ -54,7 +54,7 @@ Nous avons utilisé les fichiers annuels entre 2005 et 2018, structurés en quat
 - **caracteristiques** : infos principales sur l’accident (date, heure, luminosité, lieu, météo, etc.)
 - **lieux** : configuration de la route et conditions d'infrastructure
 - **vehicules** : type de véhicules impliqués et point d'impact
-- **usagers** : profil et gravité des personnes impliquées
+- **usagers** : profil et gravité des personnes impliquées\n
 Une difficulté notable a été la gestion de l’hétérogénéité entre fichiers annuels : encodages variables (latin1 ou utf-8), séparateurs différents (, ou \t), colonnes présentes ou absentes selon l'année.
 
 Un script de lecture automatique a été mis en place pour charger les 4 tables par année en homogénéisant les formats.\n
