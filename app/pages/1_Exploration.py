@@ -169,7 +169,7 @@ vehicules = load_vehicules_2005_2018()
 st.divider()
 
 # Onglets pour organiser ton code existant (colle tes blocs EDA dans les bons onglets)
-tab1, tab2, tab3, tab4 = st.tabs(["📥 Chargement", "🔍 Exploration", "🧼 Nettoyage", "📊 Dataviz"])
+tab1, tab2, tab3 = st.tabs(["📥 Chargement", "🔍 Exploration / 🧼 Nettoyage", "📊 Dataviz"])
 with tab1:
     st.markdown("#### Aperçu du DataFrame : `Caractéristiques`")
     st.dataframe(caracs.head())
@@ -179,39 +179,6 @@ with tab1:
     c3.metric("Colonnes totales:", caracs.shape[1])
     #c3.metric("Mémoire (Mo)", round(caracs.memory_usage(deep=True).sum()/1024**2, 2))
 
-    st.divider()
-
-    st.markdown("#### Aperçu du DataFrame : `Usagers`")
-    st.dataframe(usagers.head())
-    c1, c2, c3 = st.columns(3)
-    c1.metric("Lignes totales (full):", "2 142 195")
-    c2.metric("Lignes totales (sample):", f"{usagers.shape[0]:,}".replace(",", " "))
-    c3.metric("Colonnes totales:", usagers.shape[1])
-    #c3.metric("Mémoire (Mo)", round(usagers.memory_usage(deep=True).sum()/1024**2, 2))
-   
-    st.divider()
-
-    st.markdown("#### Aperçu du DataFrame : `Lieux`")
-    st.dataframe(lieux.head())
-    c1, c2, c3 = st.columns(3)
-    c1.metric("Lignes totales (full):", "958 469")
-    c2.metric("Lignes totales (sample):", f"{lieux.shape[0]:,}".replace(",", " "))
-    c3.metric("Colonnes totales:", lieux.shape[1])
-    #c3.metric("Mémoire (Mo)", round(lieux.memory_usage(deep=True).sum()/1024**2, 2))
-            
-    st.divider()
-
-    st.markdown("#### Aperçu du DataFrame : `Véhicules`")
-    st.dataframe(vehicules.head())
-    c1, c2, c3 = st.columns(3)
-    c1.metric("Lignes totales (full):", "1 635 811")
-    c2.metric("Lignes totales (sample):", f"{vehicules.shape[0]:,}".replace(",", " "))
-    c3.metric("Colonnes totales:", vehicules.shape[1])
-    #c3.metric("Mémoire (Mo)", round(vehicules.memory_usage(deep=True).sum()/1024**2, 2))  
-
-with tab2:
-    # info()
-    # Carac
     st.subheader("Résumé du DataFrame : `Caractéristiques`")
     st.code("""
     <class 'pandas.core.frame.DataFrame'>
@@ -241,8 +208,14 @@ with tab2:
 
     st.divider()
 
-
-    # Usagers
+    st.markdown("#### Aperçu du DataFrame : `Usagers`")
+    st.dataframe(usagers.head())
+    c1, c2, c3 = st.columns(3)
+    c1.metric("Lignes totales (full):", "2 142 195")
+    c2.metric("Lignes totales (sample):", f"{usagers.shape[0]:,}".replace(",", " "))
+    c3.metric("Colonnes totales:", usagers.shape[1])
+    #c3.metric("Mémoire (Mo)", round(usagers.memory_usage(deep=True).sum()/1024**2, 2))
+   
     st.subheader("Résumé du DataFrame : `Usagers`")
     st.code("""
     <class 'pandas.core.frame.DataFrame'>
@@ -268,7 +241,14 @@ with tab2:
     
     st.divider()
 
-    # Lieux
+    st.markdown("#### Aperçu du DataFrame : `Lieux`")
+    st.dataframe(lieux.head())
+    c1, c2, c3 = st.columns(3)
+    c1.metric("Lignes totales (full):", "958 469")
+    c2.metric("Lignes totales (sample):", f"{lieux.shape[0]:,}".replace(",", " "))
+    c3.metric("Colonnes totales:", lieux.shape[1])
+    #c3.metric("Mémoire (Mo)", round(lieux.memory_usage(deep=True).sum()/1024**2, 2))
+            
     st.subheader("Résumé du DataFrame : `Lieux`")
     st.code("""
     <class 'pandas.core.frame.DataFrame'>
@@ -297,10 +277,16 @@ with tab2:
     18  annee    958469 non-null  int64  
     dtypes: float64(15), int64(2), object(2)
     """)
-            
     st.divider()
 
-    # Vehicules
+    st.markdown("#### Aperçu du DataFrame : `Véhicules`")
+    st.dataframe(vehicules.head())
+    c1, c2, c3 = st.columns(3)
+    c1.metric("Lignes totales (full):", "1 635 811")
+    c2.metric("Lignes totales (sample):", f"{vehicules.shape[0]:,}".replace(",", " "))
+    c3.metric("Colonnes totales:", vehicules.shape[1])
+    #c3.metric("Mémoire (Mo)", round(vehicules.memory_usage(deep=True).sum()/1024**2, 2))  
+
     st.subheader("Résumé du DataFrame `Vehicules`")
     st.code("""
     <class 'pandas.core.frame.DataFrame'>
@@ -322,9 +308,7 @@ with tab2:
     """)
 
             
-with tab3:
-    st.markdown("#### Nettoyages appliqués")
-    
+with tab2:
     st.write("### Préparation des données")
     st.write(""" Pour préparer au mieux les données en vue de la modélisation, nous avons testé deux approches :
     - la première consistait à prétraiter chaque DataFrame séparément avant de les fusionner,
@@ -590,7 +574,7 @@ with tab3:
 
 
 
-with tab4:
+with tab3:
     st.markdown("#### Dataviz")
     #############################################################################
     ##                                DataViz                                  ##
