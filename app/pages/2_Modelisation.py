@@ -28,6 +28,10 @@ st.write("###### EasyEnsembleClassifier")
 with st.expander("Voir le résultat"):
   st.image("reports/EasyEnsembleClassifier.png", use_container_width=True)
 
+## A modifier
+st.write("""Nous avons selectionné les modèles les plus performants : BalancedRandomForest, RandomForest et HistGradientBoosting. 
+Ils présentent les meilleurs scores F1_macro et resistent mieux au déséquilibre entre les classes""")
+
 st.write("#### On cherche les meilleurs paramètres ")
 st.write(""" Nous avons pris les meilleurs modèles et testés les hyperparamètres.
          
@@ -77,7 +81,11 @@ st.write("###### RandomForest ")
 with st.expander("Voir le résultat"):
   st.image("reports/RandomForest_Hyperparam.png", use_container_width=True)
 
-
+# ajouter
+st.write("###### BalancedRandomForest ")
+with st.expander("Voir le résultat"):
+  st.image("reports/Balanced_Random_hyperparam_debut.png", use_container_width=True)
+  st.image("reports/Balanced_Random_hyperparam.png", use_container_width=True)
 
 
 
