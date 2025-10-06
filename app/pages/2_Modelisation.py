@@ -69,7 +69,7 @@ best_hgb = search.best_estimator_
 y_pred = best_hgb.predict(X_test_scaled)
 
 print("✅ Best params:", search.best_params_)
-print("✅Best CV F1_macro:", search.best_score_)
+print("✅ Best CV F1_macro:", search.best_score_)
 print("✅ Test set report :")
 print(classification_report(y_test, y_pred))
         """, language="python")
