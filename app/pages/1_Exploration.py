@@ -378,7 +378,7 @@ with tab2:
         # situ : inconnu
         df_merge_accident['situ'] = df_merge_accident['situ'].fillna(-1)""", language="python")
 
-    st.write("""Afin de mieux pouvoir utiliser certaines variables, mais également afin de supprimer les doublons, et de n'obtenir qu'une ligne par accident, nous avont réencoder plusieurs variables""")
+    st.write("""Afin de mieux pouvoir utiliser certaines variables, mais également afin de supprimer les doublons, et de n'obtenir qu'une ligne par accident, nous avons réencodé plusieurs variables""")
 
     st.write("### Transformation des variables 'sécurité', et 'num_veh'")
     st.write("""Nous avons **fusionné les informations de la variable sécurité**, qui distinguait la présence et l’utilisation d’un équipement à travers une valeur numérique, afin d’obtenir **une seule variable** indiquant simplement **si un équipement a été utilisé ou non**.""")
@@ -594,7 +594,7 @@ with tab3:
          st.image(f"reports/{name}", width=400, use_container_width=True)
          st.markdown("""
          **Analyse :** 
-         - Baisse nette et continue entre 2005 et 2018 - coïncide avec l'instalation de plus de 500 radars en 2005
+         - Baisse nette et continue entre 2005 et 2018 - coïncide avec l'installation de plus de 500 radars en 2005
          """)
          st.divider()
 
@@ -615,7 +615,7 @@ with tab3:
          st.image(f"reports/{name}", width=400, use_container_width=True)
          st.markdown("""
          **Analyse :** 
-         - L'après-midi est la période la plus accidentogène (38.5%) 45 corrélé à un trafic élevé et à un rythme de circulation actif  
+         - L'après-midi est la période la plus accidentogène (38.5%) : corrélé à un trafic élevé et à un rythme de circulation actif  
          - Le soir suit en intensité (baisse de luminosité + fatigue accrue)
          - Le matin a une contribution modérée  
          - La nuit (0h-6h) est la moins fréquentée, mais les accidents qui y surviennent peuvent être plus graves  

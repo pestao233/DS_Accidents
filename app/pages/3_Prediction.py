@@ -103,7 +103,9 @@ if "surf" in df.columns: # Etat surface=7 verglacée
 if "atm" in df.columns: # atm=3(pluie forte), 5(brouillard), 6 (vent fort)
     row["atm"] = atm
 
-st.write("Observation envoyée au modèle (après modification) :")
+st.divider()
+
+st.write("**Observation envoyée au modèle (après modification) :**")
 st.dataframe(pd.DataFrame([row]), use_container_width=True)
 
 
@@ -114,17 +116,28 @@ if st.button("Lancer la prédiction"):
     #X = X.drop(["grav_simpl"], axis=1)
     for file in ["Enora_scaler.joblib","Modele_Enora_rf.joblib"]:
         r = requests.get(base_url + file)
-        open(file, "wb").write(r.content)
+        with open(file, "wb") as f:
+            f.write(r.content)
 
     scaler = joblib.load("Enora_scaler.joblib")
     rf = joblib.load("Modele_Enora_rf.joblib")
 
-    X_scaled = scaler.transform(X)
+    # Vérification de la cohérence des colonnes
+    if hasattr(scaler, "feature_names_in_"):
+         expected_cols = list(scaler.feature_names_in_)
+         X = X[expected_cols]  # réordonne selon le scaler
+         row = row[expected_cols]
+
+    X_scaled = scaler.transform(pd.DataFrame([row]))
     
     y_pred = rf.predict(X_scaled)[0]
+
+
 
     st.success(f"👉 Résultat de la prédiction : **{int(y_pred)}**")
 
     if hasattr(rf, "predict_proba"):
-        st.caption(f"Confiance (proba max) : {rf.predict_proba(X).max():.3f}")
+        proba = rf.predict_proba(X_scaled)[0]
+        st.caption(f"Confiance (proba max) : {rf.predict_proba(X_scaled).max():.3f}")
+        st.caption(f"Probas par classe {list(rf.classes_)} : {proba.round(3).tolist()}")
 #caption("Le modèle utilise un pipeline pré-entraîné sur les données 2005–2018.")
