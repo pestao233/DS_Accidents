@@ -29,13 +29,13 @@ FEATURES = ["lum","secu","col","obs", "catv","situ", "agg", "surf","atm"]
 df = pd.read_csv("data/X_test_encoded_sample.csv",
                  sep=",",
                  #skiprows=1,    # J'ai ajouté ce saut car une ligne est apparue dans ce df en 1ere ligne!??
-                 nrows=100,
+                 nrows=1000,
                  low_memory=False)
 #df = df_full[(df_full[["lum","secu","col","obs", "catv","situ", "agg", "surf","atm"]] != -1).all(axis=1)]
 
 y = pd.read_csv("data/y_test_encoded_sample.csv",
                 sep=",",
-                nrows=100)
+                nrows=1000)
 
 base_url = "https://github.com/pestao233/DS_Accidents/releases/download/v1.0/"
 
