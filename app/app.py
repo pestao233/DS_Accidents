@@ -48,7 +48,7 @@ Présentation du Projet sur **Streamlit**
 
 Utilisez le menu de gauche pour naviguer :
 - **Exploration des données (variables explicatives + cible)** 
-- **Modélisation** (entraînement de modèles RandomForest / HGB / .. + affichage de métriques)
+- **Modélisation** (entraînement de modèles + affichage de métriques)
 - **Prédiction** : faire une prédiction sur de nouvelles données
 """)
 
