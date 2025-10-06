@@ -3,3 +3,7 @@ Liens de la release GitHub :
 df : https://github.com/pestao233/DS_Accidents/releases/download/v1.0/df_accidents_final.csv.gz
 Modèle : https://github.com/pestao233/DS_Accidents/releases/download/v1.0/Modele_Enora_rf.joblib
 scaler : https://github.com/pestao233/DS_Accidents/releases/download/v1.0/Enora_scaler.joblib
+
+Lien du deuxième modèle 
+Modèle : https://github.com/pestao233/DS_Accidents/releases/download/V1.1/Modele_Enora_rf.joblib
+Scaler : https://github.com/pestao233/DS_Accidents/releases/download/V1.1/Enora_scaler.joblib
