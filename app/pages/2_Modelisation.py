@@ -76,7 +76,7 @@ with st.expander("Voir le résultat"):
 st.write("###### RandomForest ")
 with st.expander("Voir le résultat"):
   st.image("reports/RandomForest_Hyperparam.png", use_container_width=True)
-Réduire
+
 
 
 
