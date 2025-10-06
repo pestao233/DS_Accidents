@@ -333,7 +333,6 @@ with tab2:
  """)
     st.write("""Par ailleurs, les accidents comportent un grand nombre de facteurs — tels que le lieu, la présence éventuelle de piétons, l’équipement de sécurité, ou encore le type de véhicule — ce qui a entraîné la présence de **nombreuses valeurs manquantes dans certaines variables**.      
     """)
-    st.write("###### insérer une image")
     
     st.write("### Gestion des Nans")
     st.write("""Le DataFrame final comportait plusieurs colonnes inutiles pour notre analyse que nous avons supprimés directement""")
