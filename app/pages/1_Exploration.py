@@ -343,14 +343,12 @@ with tab3:
     """, language="python")
 
     st.write("### Gestion des valeurs manquantes et des doublons")
-    st.write("""Le premier défi auquel nous avons été confronté lors du pré-traitement a été la **gestion des valeurs manquantes et des doublons**.
-    Ces doublons provenaient du fait qu’un même accident pouvait apparaître plusieurs fois dans le jeu de données, notamment lorsqu’il était décrit au niveau des **véhicules** ou des **usagers**.
-    
-    Comme notre objectif était d’analyser la gravité de l’accident, nous avons réencodé et agrégé certaines variables afin d’obtenir un jeu de données unique, contenant **une seule ligne par accident**.
-                
-    Par ailleurs, les accidents comportent un grand nombre de facteurs — tels que le lieu, la présence éventuelle de piétons, l’équipement de sécurité, ou encore le type de véhicule — ce qui a entraîné 
-            la présence de **nombreuses valeurs manquantes dans certaines variables**.      
-            """)
+    st.write("""Le premier défi auquel nous avons été confronté lors du pré-traitement a été la **gestion des valeurs manquantes et des doublons**.\n""")
+    st.write("""Ces doublons provenaient du fait qu’un même accident pouvait apparaître plusieurs fois dans le jeu de données, notamment lorsqu’il était décrit au niveau des **véhicules** ou des **usagers**.\n""")
+    st.write("""Comme notre objectif était d’analyser la gravité de l’accident, nous avons réencodé et agrégé certaines variables afin d’obtenir un jeu de données unique, contenant **une seule ligne par accident**.\n
+ """)
+    st.write("""Par ailleurs, les accidents comportent un grand nombre de facteurs — tels que le lieu, la présence éventuelle de piétons, l’équipement de sécurité, ou encore le type de véhicule — ce qui a entraîné la présence de **nombreuses valeurs manquantes dans certaines variables**.      
+    """)
     st.write("###### insérer une image")
     
     st.write("### Gestion des Nans")
@@ -399,9 +397,8 @@ with tab3:
     st.write("""Afin de mieux pouvoir utiliser certaines variables, mais également afin de supprimer les doublons, et de n'obtenir qu'une ligne par accident, nous avont réencoder plusieurs variables""")
 
     st.write("### Transformation des variables 'sécurité', et 'num_veh'")
-    st.write("""Nous avons **fusionné les informations de la variable sécurité**, qui distinguait la présence et l’utilisation d’un équipement à travers une valeur numérique, afin d’obtenir **une seule variable** indiquant simplement **si un équipement a été utilisé ou non**.
-
-    De plus, la colonne **num_veh a été supprimée** et remplacée par une variable correspondant au **nombre de véhicules impliqués dans chaque accident**.
+    st.write("""Nous avons **fusionné les informations de la variable sécurité**, qui distinguait la présence et l’utilisation d’un équipement à travers une valeur numérique, afin d’obtenir **une seule variable** indiquant simplement **si un équipement a été utilisé ou non**.""")
+    st.write("""De plus, la colonne **num_veh a été supprimée** et remplacée par une variable correspondant au **nombre de véhicules impliqués dans chaque accident**.
     """)
     with st.expander("Exemple code variable sécurité"):
         st.code("""
@@ -519,13 +516,12 @@ with tab3:
     Nous avons supprimé minute.""")
 
     st.write("### Train/test split")
-    st.code("""from sklearn.preprocessing import StandardScaler
-
-    scaler = StandardScaler(with_mean=False)
-    scaler.fit(X_train_transformed)
-
-    X_train_scaled = scaler.transform(X_train_transformed)
-    X_test_scaled = scaler.transform(X_test_transformed)""", language="python")
+    st.code("""##On split
+    from sklearn.model_selection import train_test_split
+    X = df_fin.drop(columns=["grav_order_max", "Num_Acc", "an", "minute"])
+    y = df_fin["grav_order_max"]
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, stratify=y, random_state=42)
+    """, language="python")
 
     st.write("### Encodage des variables catégorielles")
     st.write("""Les colonnes heure, jour et mois créant probablement une mauvais information, nous les avons traités comme des variables catégorielles
@@ -550,16 +546,16 @@ with tab3:
     X_test_transformed = preprocess.transform(X_test)
             """, language="python")
 
-    st.write("### Normalisation et rééquilibrage des classes")
+    st.write("### Standardisation et rééquilibrage des classes")
     st.write("""Nous avons remarqué que nous avions un déséquilibre des classes, que nous avons traité 
     """)
 
     st.write("""Comme nous avons rencontré à plusieurs reprise des problèmes de mémoire, nous avons d'abord opté pour un undersampling léger, puis ensuite un SMOTE afin de rééquilibrer 
     """)
 
-    st.write("#### Normalisation ")
+    st.write("#### Standardisation ")
     st.code("""
-    #Normalisation
+    #Standardisation
 
     scaler = StandardScaler(with_mean=False)
     scaler.fit(X_train_transformed)
